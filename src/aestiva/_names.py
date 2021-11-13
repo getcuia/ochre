@@ -155,6 +155,70 @@ x11_colors = {
 }
 
 
+# PWG color names: <https://en.wikipedia.org/wiki/X11_color_names#Derived_lists>
+pwg_colors = {
+    "black": "#000000",
+    "blue": "#0000FF",
+    "brown": "#A52A2A",
+    "buff": "#F0DC82",
+    "cyan": "#00FFFF",
+    "darkblue": "#00008B",
+    "darkbrown": "#5C4033",
+    "darkbuff": "#976638",
+    "darkcyan": "#008B8B",
+    "darkgold": "#EEBC1D",
+    "darkgoldenrod": "#B8860B",
+    "darkgray": "#404040",
+    "darkgreen": "#006400",
+    "darkivory": "#F2E58F",
+    "darkmagenta": "#8B008B",
+    "darkmustard": "#7C7C40",
+    "darkorange": "#FF8C00",
+    "darkpink": "#E75480",
+    "darkred": "#8B0000",
+    "darksilver": "#AFAFAF",
+    "darkturquoise": "#00CED1",
+    "darkviolet": "#9400D3",
+    "darkyellow": "#FFCC00",
+    "gold": "#FFD700",
+    "goldenrod": "#DAA520",
+    "gray": "#808080",
+    "green": "#008000",
+    "ivory": "#FFFFF0",
+    "lightblack": "#808080",
+    "lightblue": "#ADD8E6",
+    "lightbrown": "#996600",
+    "lightbuff": "#ECD9B0",
+    "lightcyan": "#E0FFFF",
+    "lightgold": "#F1E5AC",
+    "lightgoldenrod": "#FFEC8B",
+    "lightgray": "#D3D3D3",
+    "lightgreen": "#90EE90",
+    "lightivory": "#FFF8C9",
+    "lightmagenta": "#FF77FF",
+    "lightmustard": "#EEDD62",
+    "lightorange": "#D9A465",
+    "lightpink": "#FFB6C1",
+    "lightred": "#FF3333",
+    "lightsilver": "#E1E1E1",
+    "lightturquoise": "#AFE4DE",
+    "lightviolet": "#7A5299",
+    "lightyellow": "#FFFFE0",
+    "magenta": "#FF00FF",
+    "mustard": "#FFDB58",
+    "orange": "#FFA500",
+    "pink": "#FFC0CB",
+    "red": "#FF0000",
+    "silver": "#C0C0C0",
+    "turquoise": "#30D5C8",
+    "violet": "#EE82EE",
+    "white": "#FFFFFF",
+    "yellow": "#FFFF00",
+}
+
+
+
+
 # # The following colors were taken as the average of the colors found in
 # # <https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit>.
 # # They had then their lightness adjusted to be closer to the average of the
