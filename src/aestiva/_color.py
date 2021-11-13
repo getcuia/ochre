@@ -161,7 +161,9 @@ class Color(NamedTuple):
         >>> Color(0, 0, 0).toluv()  # doctest: +NUMBER
         (0.0, 0.0, 0.0)
         >>> Color(0.5, 0.5, 0.5).toluv()  # doctest: +NUMBER
-        (0.533890, 0.0, 0.0)
+        (0.53389, 0.0, -0.00009)
+        >>> Color(1, 0, 0).toluv()  # doctest: +NUMBER
+        (0.532328817858425, 1.75053035736495, 0.37750505032665)
         """
         return xyz_to_luv(*self.toxyz())
 
@@ -195,6 +197,12 @@ class Color(NamedTuple):
         (0.0, 0.0, 3.141593)
         >>> Color(0.3, 0.6, 0.9).tolch()  # doctest: +NUMBER
         (0.616755, 0.786916, 4.317256)
+        >>> Color(0.5, 0.5, 0.5).tolch()  # doctest: +NUMBER
+        (0.5338896474111432, 9.146128737768686e-05, 4.76440374867805)
+        >>> Color(1, 0, 0).tolch()  # doctest: +NUMBER
+        (0.5323288178584246, 1.79077262517562, 0.2123990934253588)
+        >>> Color.frombytes(250.3, 118.9, 72.3).tolch()  # doctest: +NUMBER
+        (0.6497933789019237, 1.133655653473957, 0.3983495861547104)
         """
         return luv_to_lch(*self.toluv())
 
