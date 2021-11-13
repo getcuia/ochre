@@ -1,5 +1,7 @@
 """
-Colors by name.
+Colors by name from different sources.
+
+Variations and shades are not included: use the color transform methods for that.
 """
 
 
