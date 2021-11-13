@@ -2,7 +2,14 @@
 
 
 def xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
-    """Convert CIE XYZ to chromaticity coordinates u'v'."""
+    """
+    Convert CIE XYZ to chromaticity coordinates u'v'.
+
+    Examples
+    --------
+    >>> xyz_to_uv(*REF_XYZ_D65_2)
+    (0.1978398, 0.4683428)
+    """
     if x == y == 0:
         return 0, 0
     d = x + 15 * y + 3 * z
@@ -10,7 +17,14 @@ def xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
 
 
 def luv_to_uv(ell: float, u: float, v: float) -> tuple[float, float]:
-    r"""Convert CIE L\*u\*v\* to chromaticity coordinates u'v'."""
+    """
+    Convert CIE L\*u\*v\* to chromaticity coordinates u'v'.
+
+    Examples
+    --------
+    >>> luv_to_uv(0.5, 0.5, 0.5)  # doctest: +NUMBER
+    (0.5, 0.5)
+    """
     d = 13 * ell
     return u / d + REF_UV_D65_2[0], v / d + REF_UV_D65_2[1]
 
@@ -33,8 +47,7 @@ def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
     """
     u, v = xyz_to_uv(x, y, z)
 
-    epsilon = 0.008856451679035631
-    if y > epsilon:
+    if y > EPSILON:
         ell = 116 * y ** (1 / 3) - 16
     else:
         ell = KAPPA * y
@@ -120,5 +133,6 @@ REF_XYZ_D65_2 = 0.95047, 1.00000, 1.08883
 REF_UV_D65_2 = xyz_to_uv(*REF_XYZ_D65_2)
 
 
-# Constant used in the CIE L*u*v* to CIE XYZ conversion.
-KAPPA = 903.2962962962961
+# Constant used in the CIE L*u*v* to CIE XYZ and back conversions.
+EPSILON = (6 / 29) ** 3
+KAPPA = (29 / 3) ** 3
