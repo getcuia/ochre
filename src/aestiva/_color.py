@@ -1,5 +1,12 @@
 """An object representing a color."""
 
+from __future__ import annotations
+
+from typing import NamedTuple
+
+from ._conversions import lch_to_luv, luv_to_lch, luv_to_xyz, xyz_to_luv
+from ._misc import clamp
+
 
 class Color(NamedTuple):
     """
@@ -151,8 +158,8 @@ class Color(NamedTuple):
 
         Examples
         --------
-        >>> Color(0, 0, 0).toluv()
-        (0, 0, 0)
+        >>> Color(0, 0, 0).toluv()  # doctest: +NUMBER
+        (0.0, 0.0, 0.0)
         >>> Color(0.5, 0.5, 0.5).toluv()  # doctest: +NUMBER
         (0.533890, 0.0, 0.0)
         """
@@ -184,8 +191,8 @@ class Color(NamedTuple):
 
         Examples
         --------
-        >>> Color(0, 0, 0).tolch()
-        (0, 0, 0)
+        >>> Color(0, 0, 0).tolch()  # doctest: +NUMBER
+        (0.0, 0.0, 3.141593)
         >>> Color(0.3, 0.6, 0.9).tolch()  # doctest: +NUMBER
         (0.616755, 0.786916, 4.317256)
         """
@@ -296,10 +303,9 @@ class Color(NamedTuple):
 
         Examples
         --------
-        >>> from kay.color import BLACK, WHITE
-        >>> BLACK.islight()
+        >>> Color(0, 0, 0).islight()
         False
-        >>> WHITE.islight()
+        >>> Color(1, 1, 1).islight()
         True
         """
         return self.lightness > 0.5
@@ -312,10 +318,9 @@ class Color(NamedTuple):
 
         Examples
         --------
-        >>> from kay.color import BLACK, WHITE
-        >>> BLACK.isdark()
+        >>> Color(0, 0, 0).isdark()
         True
-        >>> WHITE.isdark()
+        >>> Color(1, 1, 1).isdark()
         False
         """
         return not self.islight()

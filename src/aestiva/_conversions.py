@@ -1,14 +1,19 @@
 """Color conversions."""
 
 
+from __future__ import annotations
+
+import math
+
+
 def xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
     """
     Convert CIE XYZ to chromaticity coordinates u'v'.
 
     Examples
     --------
-    >>> xyz_to_uv(*REF_XYZ_D65_2)
-    (0.1978398, 0.4683428)
+    >>> xyz_to_uv(*REF_XYZ_D65_2)  # doctest: +NUMBER
+    (0.19784, 0.46834)
     """
     if x == y == 0:
         return 0, 0
@@ -17,13 +22,13 @@ def xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
 
 
 def luv_to_uv(ell: float, u: float, v: float) -> tuple[float, float]:
-    """
+    r"""
     Convert CIE L\*u\*v\* to chromaticity coordinates u'v'.
 
     Examples
     --------
     >>> luv_to_uv(0.5, 0.5, 0.5)  # doctest: +NUMBER
-    (0.5, 0.5)
+    (0.274763, 0.545259)
     """
     d = 13 * ell
     return u / d + REF_UV_D65_2[0], v / d + REF_UV_D65_2[1]
@@ -36,7 +41,8 @@ def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
     The input refers to a D65/2° standard illuminant.
 
     **Source**:
-    [The forward transformation](https://en.wikipedia.org/wiki/CIELUV#The_forward_transformation).
+    [The forward
+    transformation](https://en.wikipedia.org/wiki/CIELUV#The_forward_transformation).
 
     Examples
     --------
@@ -63,7 +69,8 @@ def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
     The output refers to a D65/2° standard illuminant.
 
     **Source**:
-    [The reverse transformation](https://en.wikipedia.org/wiki/CIELUV#The_reverse_transformation).
+    [The reverse
+    transformation](https://en.wikipedia.org/wiki/CIELUV#The_reverse_transformation).
 
     Examples
     --------
@@ -94,7 +101,8 @@ def luv_to_lch(ell: float, u: float, v: float) -> tuple[float, float, float]:
     in radians.
 
     **Source**:
-    [Cylindrical representation (CIELCh)](https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCh)).
+    [Cylindrical representation
+    (CIELCh)](https://en.wikipedia.org/wiki/CIELUV#Cylindrical_representation_(CIELCh)).
 
     Examples
     --------
