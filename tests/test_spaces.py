@@ -20,6 +20,16 @@ def test_rgb_to_hcl_roundtrip(r: float, g: float, b: float) -> None:
     )
 
 
+@given(r=between_0_and_1, g=between_0_and_1, b=between_0_and_1)
+def test_rgb_to_hex_roundtrip(r: float, g: float, b: float) -> None:
+    """Test roundtrip conversion from RGB to Hex and back."""
+    rgb = RGB(r, g, b)
+    rgb2 = rgb.hex.rgb
+    assert (rgb.red, rgb.green, rgb.blue) == pytest.approx(
+        (rgb2.red, rgb2.green, rgb2.blue), rel=1e-9, abs=4e-3
+    )
+
+
 @pytest.mark.parametrize(
     "rgb,hexstr",
     [

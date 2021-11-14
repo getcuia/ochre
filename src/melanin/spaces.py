@@ -12,6 +12,12 @@ class Color(ABC):
 
     @property
     @abstractmethod
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        raise NotImplementedError()
+
+    @property
+    @abstractmethod
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         raise NotImplementedError()
@@ -24,8 +30,35 @@ class Color(ABC):
 
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
-        rgb = self.rgb
-        return int(255 * (0x10000 * rgb.red + 0x100 * rgb.green + rgb.blue))
+        return self.hex.value
+
+
+class Hex(Color):
+    """A color represented by a hexadecimal integer."""
+
+    value: int
+
+    def __init__(self, value: int) -> None:
+        """Initialize a hexadecimal color."""
+        self.value = value
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        return self
+
+    @property
+    def rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        r = (self.value >> 16) & 0xFF
+        g = (self.value >> 8) & 0xFF
+        b = self.value & 0xFF
+        return RGB(r / 255, g / 255, b / 255)
+
+    @property
+    def hcl(self) -> HCL:
+        """Return the color as an HCL object."""
+        return self.rgb.hcl
 
 
 class RGB(Color):
@@ -40,6 +73,14 @@ class RGB(Color):
         self.red = red
         self.green = green
         self.blue = blue
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        r = int(self.red * 255)
+        g = int(self.green * 255)
+        b = int(self.blue * 255)
+        return Hex((r << 16) + (g << 8) + b)
 
     @property
     def rgb(self) -> RGB:
@@ -64,6 +105,11 @@ class HCL(Color):
         self.hue = hue
         self.chroma = chroma
         self.luminance = luminance
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        return self.rgb.hex
 
     @property
     def rgb(self) -> RGB:
