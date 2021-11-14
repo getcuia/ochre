@@ -74,24 +74,24 @@ def xyz_to_rgb(x: float, y: float, z: float) -> tuple[float, float, float]:
     """Convert the color from XYZ coordinates to RGB coordinates."""
     # We're using a higher precision matrix here see
     # <https://en.wikipedia.org/wiki/SRGB#sYCC_extended-gamut_transformation>
-    red = 3.2406254 * x - 1.537208 * y - 0.4986286 * z
-    green = -0.9689307 * x + 1.8757561 * y + 0.0415175 * z
-    blue = 0.0557101 * x - 0.2040211 * y + 1.0569959 * z
+    r = 3.2406254 * x - 1.537208 * y - 0.4986286 * z
+    g = -0.9689307 * x + 1.8757561 * y + 0.0415175 * z
+    b = 0.0557101 * x - 0.2040211 * y + 1.0569959 * z
 
-    if red > 0.0031308:
-        red = 1.055 * (red ** (1 / 2.4)) - 0.055
+    if r > 0.0031308:
+        r = 1.055 * (r ** (1 / 2.4)) - 0.055
     else:
-        red = 12.92 * red
-    if green > 0.0031308:
-        green = 1.055 * (green ** (1 / 2.4)) - 0.055
+        r = 12.92 * r
+    if g > 0.0031308:
+        g = 1.055 * (g ** (1 / 2.4)) - 0.055
     else:
-        green = 12.92 * green
-    if blue > 0.0031308:
-        blue = 1.055 * (blue ** (1 / 2.4)) - 0.055
+        g = 12.92 * g
+    if b > 0.0031308:
+        b = 1.055 * (b ** (1 / 2.4)) - 0.055
     else:
-        blue = 12.92 * blue
+        b = 12.92 * b
 
-    return _clamp(red), _clamp(green), _clamp(blue)
+    return r, g, b
 
 
 def _clamp(value: float, min_value: float = 0.0, max_value: float = 1.0) -> float:
