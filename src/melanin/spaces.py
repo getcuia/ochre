@@ -2,9 +2,22 @@
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 
-class Color:
-    """A generic color."""
+
+class Color(ABC):
+    """Abstract base class for color spaces."""
+
+    @property
+    @abstractmethod
+    def _rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        raise NotImplementedError()
+
+    def __index__(self) -> int:
+        """Return the index of the color as an hexadecimal integer."""
+        rgb = self._rgb
+        return int(255 * (0x10000 * rgb.red + 0x100 * rgb.green + rgb.blue))
 
 
 class RGB(Color):
@@ -19,6 +32,11 @@ class RGB(Color):
         self.red = red
         self.green = green
         self.blue = blue
+
+    @property
+    def _rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        return self
 
 
 class HCL(Color):

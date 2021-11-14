@@ -3,7 +3,7 @@
 __version__ = "0.1.0"
 
 
-__all__ = ["Color"]
+__all__ = ["RGB"]
 
 
-from ._color import Color
+from .spaces import RGB
