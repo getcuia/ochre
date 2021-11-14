@@ -145,22 +145,22 @@ class Ansi256(Color):
     code: int
 
     ANSI8 = [
-        WebColor("black"),
-        WebColor("maroon"),
-        WebColor("green"),
-        Hex("#808000"),
-        Hex("#000080"),
-        Hex("#800080"),
-        Hex("#008080"),
-        WebColor("silver"),
-        WebColor("grey"),
-        WebColor("red"),
-        Hex("#00ff00"),
-        Hex("#ffff00"),
-        Hex("#0000ff"),
-        WebColor("fuchsia"),
-        Hex("#00ffff"),
-        WebColor("white"),
+        WebColor("black"),  # 0
+        WebColor("maroon"),  # 1
+        WebColor("green"),  # 2
+        WebColor("olive"),  # 3
+        WebColor("navy"),  # 4
+        WebColor("purple"),  # 5
+        WebColor("teal"),  # 6
+        WebColor("silver"),  # 7
+        WebColor("grey"),  # 8
+        WebColor("red"),  # 9
+        WebColor("lime"),  # 10
+        WebColor("yellow"),  # 11
+        WebColor("blue"),  # 12
+        WebColor("fuchsia"),  # 13
+        WebColor("aqua"),  # 14
+        WebColor("white"),  # 15
     ]
 
     def __init__(self, code: int) -> None:
