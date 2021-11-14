@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Text
 
 from . import colorsys
 
@@ -38,8 +39,10 @@ class Hex(Color):
 
     value: int
 
-    def __init__(self, value: int) -> None:
+    def __init__(self, value: int | Text) -> None:
         """Initialize a hexadecimal color."""
+        if isinstance(value, Text):
+            value = int(value, 16)
         self.value = value
 
     @property
