@@ -53,6 +53,11 @@ def test_hex_representation(rgb: RGB, hexstr: Text) -> None:
         ("0xff00", RGB(0, 1, 0)),
         ("0xff0000", RGB(1, 0, 0)),
         ("0xffffff", RGB(1, 1, 1)),
+        ("0", RGB(0, 0, 0)),
+        ("ff", RGB(0, 0, 1)),
+        ("ff00", RGB(0, 1, 0)),
+        ("ff0000", RGB(1, 0, 0)),
+        ("ffffff", RGB(1, 1, 1)),
     ],
 )
 def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
