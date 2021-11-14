@@ -12,14 +12,14 @@ Examples
 
 This module provides some conversions, among which are:
 
-1. RGB-XYZ:
+1. RGB-CIEXYZ:
 
 >>> colorsys.rgb_to_xyz(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.09, 0.11, 0.14)
 >>> colorsys.xyz_to_rgb(0.09, 0.11, 0.14)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-2. RGB-LUV:
+2. RGB-CIELUV:
 
 >>> colorsys.rgb_to_luv(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.4, -0.2, 0.0)
@@ -73,7 +73,7 @@ __all__ = [
 
 
 def rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, float]:
-    """Convert the color from RGB coordinates to XYZ coordinates."""
+    """Convert the color from RGB coordinates to CIEXYZ coordinates."""
     if r > 0.04045:
         r = ((r + 0.055) / 1.055) ** 2.4
     else:
@@ -94,7 +94,7 @@ def rgb_to_xyz(r: float, g: float, b: float) -> tuple[float, float, float]:
 
 
 def xyz_to_rgb(x: float, y: float, z: float) -> tuple[float, float, float]:
-    """Convert the color from XYZ coordinates to RGB coordinates."""
+    """Convert the color from CIEXYZ coordinates to RGB coordinates."""
     # We're using a higher precision matrix here see
     # <https://en.wikipedia.org/wiki/SRGB#sYCC_extended-gamut_transformation>
     r = 3.2406254 * x - 1.537208 * y - 0.4986286 * z
@@ -118,12 +118,12 @@ def xyz_to_rgb(x: float, y: float, z: float) -> tuple[float, float, float]:
 
 
 def luv_to_rgb(ell: float, u: float, v: float) -> tuple[float, float, float]:
-    """Convert the color from LUV coordinates to RGB coordinates."""
+    """Convert the color from CIELUV coordinates to RGB coordinates."""
     return xyz_to_rgb(*luv_to_xyz(ell, u, v))
 
 
 def rgb_to_luv(r: float, g: float, b: float) -> tuple[float, float, float]:
-    """Convert the color from RGB coordinates to LUV coordinates."""
+    """Convert the color from RGB coordinates to CIELUV coordinates."""
     return xyz_to_luv(*rgb_to_xyz(r, g, b))
 
 
@@ -138,7 +138,7 @@ def rgb_to_hcl(r: float, g: float, b: float) -> tuple[float, float, float]:
 
 
 def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
-    """Convert the color from XYZ coordinates to LUV coordinates."""
+    """Convert the color from CIEXYZ coordinates to CIELUV coordinates."""
     u, v = _xyz_to_uv(x, y, z)
 
     if y > EPSILON:
@@ -151,7 +151,7 @@ def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
 
 
 def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
-    """Convert the color from LUV coordinates to XYZ coordinates."""
+    """Convert the color from CIELUV coordinates to CIEXYZ coordinates."""
     if ell == 0:
         return 0, 0, 0
 
@@ -169,7 +169,7 @@ def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
 
 
 def luv_to_hcl(ell: float, u: float, v: float) -> tuple[float, float, float]:
-    """Convert the color from LUV coordinates to HCL coordinates."""
+    """Convert the color from CIELUV coordinates to HCL coordinates."""
     h = math.atan2(v, u)
     c = math.hypot(v, u)
     h = h + math.tau if h < 0 else h
@@ -177,14 +177,14 @@ def luv_to_hcl(ell: float, u: float, v: float) -> tuple[float, float, float]:
 
 
 def hcl_to_luv(h: float, c: float, ell: float) -> tuple[float, float, float]:
-    """Convert the color from HCL coordinates to LUV coordinates."""
+    """Convert the color from HCL coordinates to CIELUV coordinates."""
     u = c * math.cos(h)
     v = c * math.sin(h)
     return ell, u, v
 
 
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
-    """Convert the color from XYZ coordinates to uv chromaticity coordinates."""
+    """Convert the color from CIEXYZ coordinates to uv chromaticity coordinates."""
     if x == y == 0:
         return 0, 0
     d = x + 15 * y + 3 * z
@@ -192,7 +192,7 @@ def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
 
 
 def _luv_to_uv(ell: float, u: float, v: float) -> tuple[float, float]:
-    """Convert the color from LUV coordinates to uv chromaticity coordinates."""
+    """Convert the color from CIELUV coordinates to uv chromaticity coordinates."""
     d = 13 * ell
     return u / d + REF_UV_D65_2[0], v / d + REF_UV_D65_2[1]
 
