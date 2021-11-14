@@ -42,7 +42,7 @@ class Hex(Color):
     def __init__(self, value: int | Text) -> None:
         """Initialize a hexadecimal color."""
         if isinstance(value, Text):
-            value = int(value, 16)
+            value = int(value.lstrip("#"), 16)
         self.value = value
 
     @property
