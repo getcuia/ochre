@@ -26,6 +26,13 @@ This module provides conversions between:
 >>> colorsys.luv_to_rgb(0.4, -0.2, 0.0)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
+3. RGB and LCH coordinates:
+
+>>> colorsys.rgb_to_lch(0.2, 0.4, 0.4)  # doctest: +NUMBER
+(0.4, 0.2, 3.4)
+>>> colorsys.lch_to_rgb(0.4, 0.2, 3.4)  # doctest: +NUMBER
+(0.2, 0.4, 0.4)
+
 And the standard coversions are still available:
 
 >>> colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
@@ -114,6 +121,16 @@ def luv_to_rgb(ell: float, u: float, v: float) -> tuple[float, float, float]:
 def rgb_to_luv(r: float, g: float, b: float) -> tuple[float, float, float]:
     """Convert the color from RGB coordinates to LUV coordinates."""
     return xyz_to_luv(*rgb_to_xyz(r, g, b))
+
+
+def lch_to_rgb(ell: float, c: float, h: float) -> tuple[float, float, float]:
+    """Convert the color from LCH coordinates to RGB coordinates."""
+    return luv_to_rgb(*lch_to_luv(ell, c, h))
+
+
+def rgb_to_lch(r: float, g: float, b: float) -> tuple[float, float, float]:
+    """Convert the color from RGB coordinates to LCH coordinates."""
+    return luv_to_lch(*rgb_to_luv(r, g, b))
 
 
 def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
