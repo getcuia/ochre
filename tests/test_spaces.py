@@ -5,7 +5,7 @@ from typing import Text
 import pytest
 from hypothesis import given
 
-from melanin import RGB, Hex
+from melanin import RGB, Hex, WebColor
 
 from .test_colorsys import between_0_and_1
 
@@ -76,3 +76,23 @@ def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
     assert (rgb2.red, rgb2.green, rgb2.blue) == pytest.approx(
         (rgb.red, rgb.green, rgb.blue), rel=1e-9, abs=1e-6
     )
+
+
+def test_html_basic_colors() -> None:
+    """Test the sixteen basic HTML color names."""
+    assert WebColor("white").rgb == RGB(1, 1, 1)
+    assert WebColor("silver").rgb == RGB(0.75, 0.75, 0.75)
+    assert WebColor("gray").rgb == RGB(0.5, 0.5, 0.5)
+    assert WebColor("black").rgb == RGB(0, 0, 0)
+    assert WebColor("red").rgb == RGB(1, 0, 0)
+    assert WebColor("maroon").rgb == RGB(0.5, 0, 0)
+    assert WebColor("yellow").rgb == RGB(1, 1, 0)
+    assert WebColor("olive").rgb == RGB(0.5, 0.5, 0)
+    assert WebColor("lime").rgb == RGB(0, 1, 0)
+    assert WebColor("green").rgb == RGB(0, 0.5, 0)
+    assert WebColor("aqua").rgb == RGB(0, 1, 1)
+    assert WebColor("teal").rgb == RGB(0, 0.5, 0.5)
+    assert WebColor("blue").rgb == RGB(0, 0, 1)
+    assert WebColor("navy").rgb == RGB(0, 0, 0.5)
+    assert WebColor("fuchsia").rgb == RGB(1, 0, 1)
+    assert WebColor("purple").rgb == RGB(0.5, 0, 0.5)
