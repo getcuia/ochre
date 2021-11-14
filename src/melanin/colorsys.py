@@ -10,30 +10,30 @@ Examples
 --------
 >>> from melanin import colorsys
 
-This module provides conversions between:
+This module provides some conversions, among which are:
 
-1. RGB and XYZ coordinates:
+1. RGB-XYZ:
 
 >>> colorsys.rgb_to_xyz(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.09, 0.11, 0.14)
 >>> colorsys.xyz_to_rgb(0.09, 0.11, 0.14)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-2. RGB and LUV coordinates:
+2. RGB-LUV:
 
 >>> colorsys.rgb_to_luv(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.4, -0.2, 0.0)
 >>> colorsys.luv_to_rgb(0.4, -0.2, 0.0)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-3. RGB and LCH coordinates:
+3. RGB-LCH:
 
 >>> colorsys.rgb_to_lch(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.4, 0.2, 3.4)
 >>> colorsys.lch_to_rgb(0.4, 0.2, 3.4)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-And the standard coversions are still available:
+For convenience, the module also re-exports the standard coversions from `colorsys`:
 
 >>> colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
 (0.5, 0.5, 0.4)
@@ -55,6 +55,13 @@ from colorsys import (
 )
 
 __all__ = [
+    # Implemented in this module
+    "lch_to_rgb",
+    "luv_to_rgb",
+    "rgb_to_lch",
+    "rgb_to_luv",
+    "rgb_to_xyz",
+    "xyz_to_rgb",
     # Re-exported from colorsys
     "hls_to_rgb",
     "hsv_to_rgb",
@@ -62,9 +69,6 @@ __all__ = [
     "rgb_to_hsv",
     "rgb_to_yiq",
     "yiq_to_rgb",
-    # New functions
-    "rgb_to_xyz",
-    "xyz_to_rgb",
 ]
 
 
