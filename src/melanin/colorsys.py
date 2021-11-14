@@ -1,8 +1,10 @@
-"""
-Drop-in replacement for the [standard `colorsys` module](https://docs.python.org/3/library/colorsys.html).
+"""Simple color conversions.
 
-This module provides extra functionality to the standard `colorsys` module, but also
-re-exports its contents for convenience.
+This module is a drop-in replacement for the
+[standard `colorsys` module](https://docs.python.org/3/library/colorsys.html).
+
+It provides extra functionality to the standard `colorsys` module, but also re-exports
+its contents for convenience.
 
 Examples
 --------
@@ -35,6 +37,7 @@ And the standard coversions are still available:
 
 from __future__ import annotations
 
+import math
 from colorsys import (
     hls_to_rgb,
     hsv_to_rgb,
@@ -144,6 +147,21 @@ def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
     return x, y, z
 
 
+def luv_to_lch(ell: float, u: float, v: float) -> tuple[float, float, float]:
+    """Convert the color from LUV coordinates to LCH coordinates."""
+    h = math.atan2(v, u)
+    c = math.hypot(v, u)
+    h = h + math.tau if h < 0 else h
+    return ell, c, h
+
+
+def lch_to_luv(ell: float, c: float, h: float) -> tuple[float, float, float]:
+    """Convert the color from LCH coordinates to LUV coordinates."""
+    u = c * math.cos(h)
+    v = c * math.sin(h)
+    return ell, u, v
+
+
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
     """Convert the color from XYZ coordinates to uv chromaticity coordinates."""
     if x == y == 0:
@@ -164,19 +182,3 @@ KAPPA = (29 / 3) ** 3
 
 REF_XYZ_D65_2 = 0.95047, 1.00000, 1.08883
 REF_UV_D65_2 = _xyz_to_uv(*REF_XYZ_D65_2)
-
-
-def _clamp(value: float, min_value: float = 0.0, max_value: float = 1.0) -> float:
-    """
-    Clamp a value to a range.
-
-    Examples
-    --------
-    >>> _clamp(-0.5)
-    0.0
-    >>> _clamp(0.5)
-    0.5
-    >>> _clamp(1.5)
-    1.0
-    """
-    return max(min_value, min(value, max_value))
