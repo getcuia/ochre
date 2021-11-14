@@ -4,7 +4,7 @@ A tiny Python package for working with colors focusing on human perception.
 
 ## Features
 
--   [ ] Dedicated color objects
+-   [x] Dedicated color objects
 -   [x] [RGB](https://en.wikipedia.org/wiki/RGB_color_model) and
         [HCL](https://en.wikipedia.org/wiki/HCL_color_space) color spaces
 -   [x] Color conversions
