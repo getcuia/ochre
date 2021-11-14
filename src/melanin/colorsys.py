@@ -10,23 +10,7 @@ Examples
 --------
 >>> from melanin import colorsys
 
-This module provides some conversions, among which are:
-
-1. RGB-CIEXYZ:
-
->>> colorsys.rgb_to_xyz(0.2, 0.4, 0.4)  # doctest: +NUMBER
-(0.09, 0.11, 0.14)
->>> colorsys.xyz_to_rgb(0.09, 0.11, 0.14)  # doctest: +NUMBER
-(0.2, 0.4, 0.4)
-
-2. RGB-CIELUV:
-
->>> colorsys.rgb_to_luv(0.2, 0.4, 0.4)  # doctest: +NUMBER
-(0.4, -0.2, 0.0)
->>> colorsys.luv_to_rgb(0.4, -0.2, 0.0)  # doctest: +NUMBER
-(0.2, 0.4, 0.4)
-
-3. RGB-HCL:
+This module provides some conversions, among which is RGB from and to HCL:
 
 >>> colorsys.rgb_to_hcl(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (3.4, 0.2, 0.4)
@@ -57,11 +41,7 @@ from colorsys import (
 __all__ = [
     # Implemented in this module
     "hcl_to_rgb",
-    "luv_to_rgb",
     "rgb_to_hcl",
-    "rgb_to_luv",
-    "rgb_to_xyz",
-    "xyz_to_rgb",
     # Re-exported from colorsys
     "hls_to_rgb",
     "hsv_to_rgb",
