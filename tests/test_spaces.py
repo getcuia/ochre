@@ -78,21 +78,27 @@ def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
     )
 
 
-def test_html_basic_colors() -> None:
+@pytest.mark.parametrize(
+    "webcolor,rgb",
+    [
+        (WebColor("white"), RGB(1, 1, 1)),
+        (WebColor("silver"), RGB(0.75, 0.75, 0.75)),
+        (WebColor("gray"), RGB(0.5, 0.5, 0.5)),
+        (WebColor("black"), RGB(0, 0, 0)),
+        (WebColor("red"), RGB(1, 0, 0)),
+        (WebColor("maroon"), RGB(0.5, 0, 0)),
+        (WebColor("yellow"), RGB(1, 1, 0)),
+        (WebColor("olive"), RGB(0.5, 0.5, 0)),
+        (WebColor("lime"), RGB(0, 1, 0)),
+        (WebColor("green"), RGB(0, 0.5, 0)),
+        (WebColor("aqua"), RGB(0, 1, 1)),
+        (WebColor("teal"), RGB(0, 0.5, 0.5)),
+        (WebColor("blue"), RGB(0, 0, 1)),
+        (WebColor("navy"), RGB(0, 0, 0.5)),
+        (WebColor("fuchsia"), RGB(1, 0, 1)),
+        (WebColor("purple"), RGB(0.5, 0, 0.5)),
+    ],
+)
+def test_html_basic_colors(webcolor, rgb) -> None:
     """Test the sixteen basic HTML color names."""
-    assert WebColor("white").rgb == RGB(1, 1, 1)
-    assert WebColor("silver").rgb == RGB(0.75, 0.75, 0.75)
-    assert WebColor("gray").rgb == RGB(0.5, 0.5, 0.5)
-    assert WebColor("black").rgb == RGB(0, 0, 0)
-    assert WebColor("red").rgb == RGB(1, 0, 0)
-    assert WebColor("maroon").rgb == RGB(0.5, 0, 0)
-    assert WebColor("yellow").rgb == RGB(1, 1, 0)
-    assert WebColor("olive").rgb == RGB(0.5, 0.5, 0)
-    assert WebColor("lime").rgb == RGB(0, 1, 0)
-    assert WebColor("green").rgb == RGB(0, 0.5, 0)
-    assert WebColor("aqua").rgb == RGB(0, 1, 1)
-    assert WebColor("teal").rgb == RGB(0, 0.5, 0.5)
-    assert WebColor("blue").rgb == RGB(0, 0, 1)
-    assert WebColor("navy").rgb == RGB(0, 0, 0.5)
-    assert WebColor("fuchsia").rgb == RGB(1, 0, 1)
-    assert WebColor("purple").rgb == RGB(0.5, 0, 0.5)
+    assert webcolor.rgb == rgb
