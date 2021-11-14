@@ -217,6 +217,19 @@ pwg_colors = {
 }
 
 
+# TODO: https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+
+
+# TODO: https://www.w3.org/TR/css-color-3/#svg-color
+
+
+# TODO: https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors
+
+
+# TODO: https://en.wikipedia.org/wiki/List_of_RAL_colors#Overview
+
+
+# TODO: check https://en.wikipedia.org/wiki/X11_color_names#Clashes_between_web_and_X11_colors_in_the_CSS_color_scheme
 
 
 # # The following colors were taken as the average of the colors found in
