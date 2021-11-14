@@ -26,8 +26,8 @@ def test_rgb_to_luv_roundtrip(r: float, g: float, b: float) -> None:
 
 
 @given(r=between_0_and_1, g=between_0_and_1, b=between_0_and_1)
-def test_rgb_to_lch_roundtrip(r: float, g: float, b: float) -> None:
-    """Test that rgb_to_lch and lch_to_rgb are inverses."""
-    ell, c, h = colorsys.rgb_to_lch(r, g, b)
-    r2, g2, b2 = colorsys.lch_to_rgb(ell, c, h)
+def test_rgb_to_hcl_roundtrip(r: float, g: float, b: float) -> None:
+    """Test that rgb_to_hcl and hcl_to_rgb are inverses."""
+    h, c, ell = colorsys.rgb_to_hcl(r, g, b)
+    r2, g2, b2 = colorsys.hcl_to_rgb(h, c, ell)
     assert (r2, g2, b2) == pytest.approx((r, g, b), rel=1e-9, abs=1e-6)

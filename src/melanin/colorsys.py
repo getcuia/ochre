@@ -26,11 +26,11 @@ This module provides some conversions, among which are:
 >>> colorsys.luv_to_rgb(0.4, -0.2, 0.0)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-3. RGB-LCH:
+3. RGB-HCL:
 
->>> colorsys.rgb_to_lch(0.2, 0.4, 0.4)  # doctest: +NUMBER
-(0.4, 0.2, 3.4)
->>> colorsys.lch_to_rgb(0.4, 0.2, 3.4)  # doctest: +NUMBER
+>>> colorsys.rgb_to_hcl(0.2, 0.4, 0.4)  # doctest: +NUMBER
+(3.4, 0.2, 0.4)
+>>> colorsys.hcl_to_rgb(3.4, 0.2, 0.4)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
 For convenience, the module also re-exports the standard coversions from `colorsys`:
@@ -56,9 +56,9 @@ from colorsys import (
 
 __all__ = [
     # Implemented in this module
-    "lch_to_rgb",
+    "hcl_to_rgb",
     "luv_to_rgb",
-    "rgb_to_lch",
+    "rgb_to_hcl",
     "rgb_to_luv",
     "rgb_to_xyz",
     "xyz_to_rgb",
@@ -127,14 +127,14 @@ def rgb_to_luv(r: float, g: float, b: float) -> tuple[float, float, float]:
     return xyz_to_luv(*rgb_to_xyz(r, g, b))
 
 
-def lch_to_rgb(ell: float, c: float, h: float) -> tuple[float, float, float]:
-    """Convert the color from LCH coordinates to RGB coordinates."""
-    return luv_to_rgb(*lch_to_luv(ell, c, h))
+def hcl_to_rgb(h: float, c: float, ell: float) -> tuple[float, float, float]:
+    """Convert the color from HCL coordinates to RGB coordinates."""
+    return luv_to_rgb(*hcl_to_luv(h, c, ell))
 
 
-def rgb_to_lch(r: float, g: float, b: float) -> tuple[float, float, float]:
-    """Convert the color from RGB coordinates to LCH coordinates."""
-    return luv_to_lch(*rgb_to_luv(r, g, b))
+def rgb_to_hcl(r: float, g: float, b: float) -> tuple[float, float, float]:
+    """Convert the color from RGB coordinates to HCL coordinates."""
+    return luv_to_hcl(*rgb_to_luv(r, g, b))
 
 
 def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
@@ -168,16 +168,16 @@ def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
     return x, y, z
 
 
-def luv_to_lch(ell: float, u: float, v: float) -> tuple[float, float, float]:
-    """Convert the color from LUV coordinates to LCH coordinates."""
+def luv_to_hcl(ell: float, u: float, v: float) -> tuple[float, float, float]:
+    """Convert the color from LUV coordinates to HCL coordinates."""
     h = math.atan2(v, u)
     c = math.hypot(v, u)
     h = h + math.tau if h < 0 else h
-    return ell, c, h
+    return h, c, ell
 
 
-def lch_to_luv(ell: float, c: float, h: float) -> tuple[float, float, float]:
-    """Convert the color from LCH coordinates to LUV coordinates."""
+def hcl_to_luv(h: float, c: float, ell: float) -> tuple[float, float, float]:
+    """Convert the color from HCL coordinates to LUV coordinates."""
     u = c * math.cos(h)
     v = c * math.sin(h)
     return ell, u, v
