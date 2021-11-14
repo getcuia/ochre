@@ -64,3 +64,13 @@ class HCL(Color):
         self.hue = hue
         self.chroma = chroma
         self.luminance = luminance
+
+    @property
+    def rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        return RGB(*colorsys.hcl_to_rgb(self.hue, self.chroma, self.luminance))
+
+    @property
+    def hcl(self) -> HCL:
+        """Return the color as an HCL object."""
+        return self
