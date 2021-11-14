@@ -94,6 +94,59 @@ def xyz_to_rgb(x: float, y: float, z: float) -> tuple[float, float, float]:
     return r, g, b
 
 
+def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
+    """Convert the color from XYZ coordinates to LUV coordinates."""
+    u, v = _xyz_to_uv(x, y, z)
+
+    if y > EPSILON:
+        ell = 116 * y ** (1 / 3) - 16
+    else:
+        ell = KAPPA * y
+    u, v = 13 * ell * (u - REF_UV_D65_2[0]), 13 * ell * (v - REF_UV_D65_2[1])
+
+    return ell / 100, u / 100, v / 100
+
+
+def luv_to_xyz(ell: float, u: float, v: float) -> tuple[float, float, float]:
+    """Convert the color from LUV coordinates to XYZ coordinates."""
+    if ell == 0:
+        return 0, 0, 0
+
+    ell, u, v = 100 * ell, 100 * u, 100 * v
+    u, v = _luv_to_uv(ell, u, v)
+
+    four_v = 4 * v
+    if ell > 8:
+        y = ((ell + 16) / 116) ** 3
+    else:
+        y = ell / KAPPA
+    x, z = 9 * y * u / four_v, y * (12 - 3 * u - 20 * v) / four_v
+
+    return x, y, z
+
+
+def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
+    """Convert the color from XYZ coordinates to uv chromaticity coordinates."""
+    if x == y == 0:
+        return 0, 0
+    d = x + 15 * y + 3 * z
+    return 4 * x / d, 9 * y / d
+
+
+def _luv_to_uv(ell: float, u: float, v: float) -> tuple[float, float]:
+    """Convert the color from LUV coordinates to uv chromaticity coordinates."""
+    d = 13 * ell
+    return u / d + REF_UV_D65_2[0], v / d + REF_UV_D65_2[1]
+
+
+EPSILON = (6 / 29) ** 3
+KAPPA = (29 / 3) ** 3
+
+
+REF_XYZ_D65_2 = 0.95047, 1.00000, 1.08883
+REF_UV_D65_2 = _xyz_to_uv(*REF_XYZ_D65_2)
+
+
 def _clamp(value: float, min_value: float = 0.0, max_value: float = 1.0) -> float:
     """
     Clamp a value to a range.
