@@ -8,14 +8,23 @@ Examples
 --------
 >>> from melanin import colorsys
 
-This module provides conversions between RGB and XYZ coordinates:
+This module provides conversions between:
+
+1. RGB and XYZ coordinates:
 
 >>> colorsys.rgb_to_xyz(0.2, 0.4, 0.4)  # doctest: +NUMBER
 (0.09, 0.11, 0.14)
 >>> colorsys.xyz_to_rgb(0.09, 0.11, 0.14)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-The standard coversions are still available:
+2. RGB and LUV coordinates:
+
+>>> colorsys.rgb_to_luv(0.2, 0.4, 0.4)  # doctest: +NUMBER
+(0.4, -0.2, 0.0)
+>>> colorsys.luv_to_rgb(0.4, -0.2, 0.0)  # doctest: +NUMBER
+(0.2, 0.4, 0.4)
+
+And the standard coversions are still available:
 
 >>> colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
 (0.5, 0.5, 0.4)
@@ -92,6 +101,16 @@ def xyz_to_rgb(x: float, y: float, z: float) -> tuple[float, float, float]:
         b = 12.92 * b
 
     return r, g, b
+
+
+def luv_to_rgb(ell: float, u: float, v: float) -> tuple[float, float, float]:
+    """Convert the color from LUV coordinates to RGB coordinates."""
+    return xyz_to_rgb(*luv_to_xyz(ell, u, v))
+
+
+def rgb_to_luv(r: float, g: float, b: float) -> tuple[float, float, float]:
+    """Convert the color from RGB coordinates to LUV coordinates."""
+    return xyz_to_luv(*rgb_to_xyz(r, g, b))
 
 
 def xyz_to_luv(x: float, y: float, z: float) -> tuple[float, float, float]:
