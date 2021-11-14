@@ -5,7 +5,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Text
 
-from . import colorsys
+from . import colorsys, web
 
 
 class Color(ABC):
@@ -15,6 +15,12 @@ class Color(ABC):
     @abstractmethod
     def hex(self) -> Hex:
         """Return the color as an Hex object."""
+        raise NotImplementedError()
+
+    @property
+    @abstractmethod
+    def name(self) -> WebColor:
+        """Return the color as a WebColor object."""
         raise NotImplementedError()
 
     @property
@@ -31,19 +37,19 @@ class Color(ABC):
 
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
-        return self.hex.value
+        return self.hex.integer
 
 
 class Hex(Color):
     """A color represented by a hexadecimal integer."""
 
-    value: int
+    integer: int
 
     def __init__(self, value: int | Text) -> None:
         """Initialize a hexadecimal color."""
         if isinstance(value, Text):
             value = int(value.lstrip("#"), 16)
-        self.value = value
+        self.integer = value
 
     @property
     def hex(self) -> Hex:
@@ -53,15 +59,45 @@ class Hex(Color):
     @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
-        r = (self.value >> 16) & 0xFF
-        g = (self.value >> 8) & 0xFF
-        b = self.value & 0xFF
+        r = (self.integer >> 16) & 0xFF
+        g = (self.integer >> 8) & 0xFF
+        b = self.integer & 0xFF
         return RGB(r / 255, g / 255, b / 255)
 
     @property
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return self.rgb.hcl
+
+
+class WebColor(Color):
+    """A color represented by a name."""
+
+    name: Text
+
+    def __init__(self, name: Text) -> None:
+        """Initialize a color by name."""
+        self.name = name
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        return Hex(web.colors[self.name])
+
+    @property
+    def name(self) -> WebColor:
+        """Return the color as a WebColor object."""
+        return self
+
+    @property
+    def rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        return self.hex.rgb
+
+    @property
+    def hcl(self) -> HCL:
+        """Return the color as an HCL object."""
+        return self.hex.hcl
 
 
 class RGB(Color):
