@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "aestiva"
+name = "melanin"
 version = "0.1.0"
 description = "Colors that will make you smile 🦜"
 authors = ["Felipe S. S. Schneider <schneider.felipe@posgrad.ufsc.br>"]

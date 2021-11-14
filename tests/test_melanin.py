@@ -1,6 +1,6 @@
 import pytest
 
-from aestiva import Color, __version__
+from melanin import Color, __version__
 
 
 def test_version():
