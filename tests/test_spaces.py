@@ -14,20 +14,14 @@ from .test_colorsys import between_0_and_1
 def test_rgb_to_hcl_roundtrip(r: float, g: float, b: float) -> None:
     """Test roundtrip conversion from RGB to HCL and back."""
     rgb = RGB(r, g, b)
-    rgb2 = rgb.hcl.rgb
-    assert (rgb2.red, rgb2.green, rgb2.blue) == pytest.approx(
-        (rgb.red, rgb.green, rgb.blue), rel=1e-9, abs=1e-6
-    )
+    assert rgb.hcl.rgb == rgb
 
 
 @given(r=between_0_and_1, g=between_0_and_1, b=between_0_and_1)
 def test_rgb_to_hex_roundtrip(r: float, g: float, b: float) -> None:
     """Test roundtrip conversion from RGB to Hex and back."""
     rgb = RGB(r, g, b)
-    rgb2 = rgb.hex.rgb
-    assert (rgb2.red, rgb2.green, rgb2.blue) == pytest.approx(
-        (rgb.red, rgb.green, rgb.blue), rel=1e-9, abs=4e-3
-    )
+    assert rgb.hex.rgb == rgb
 
 
 @pytest.mark.parametrize(
@@ -72,10 +66,7 @@ def test_hex_representation(rgb: RGB, hexstr: Text) -> None:
 )
 def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
     """Test conversion to hexadecimal."""
-    rgb2 = Hex(hexstr).rgb
-    assert (rgb2.red, rgb2.green, rgb2.blue) == pytest.approx(
-        (rgb.red, rgb.green, rgb.blue), rel=1e-9, abs=1e-6
-    )
+    assert Hex(hexstr).rgb == rgb
 
 
 @pytest.mark.parametrize(

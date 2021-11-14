@@ -55,7 +55,7 @@ class Color(ABC):
                 + (rgb.green - other_rgb.green) ** 2
                 + (rgb.blue - other_rgb.blue) ** 2
             )
-            < 6e-3
+            < 7e-3
         )
 
 
