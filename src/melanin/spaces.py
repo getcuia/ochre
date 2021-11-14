@@ -144,7 +144,24 @@ class Ansi256(Color):
 
     code: int
 
-    ANSI8 = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
+    ANSI8 = [
+        WebColor("black"),
+        WebColor("maroon"),
+        WebColor("green"),
+        WebColor("yellow"),
+        WebColor("blue"),
+        WebColor("magenta"),
+        WebColor("cyan"),
+        WebColor("silver"),
+        WebColor("grey"),
+        WebColor("red"),
+        WebColor("lightgreen"),
+        WebColor("lightyellow"),
+        WebColor("lightblue"),
+        WebColor("fuchsia"),
+        WebColor("lightcyan"),
+        WebColor("white"),
+    ]
 
     def __init__(self, code: int) -> None:
         """Initialize an ANSI color."""
@@ -169,10 +186,7 @@ class Ansi256(Color):
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         if self.code < 16:
-            name = self.ANSI8[self.code]
-            if self.code > 7:
-                name = f"light{name}"
-            return WebColor(name).rgb
+            return self.ANSI8[self.code].rgb
         if self.code < 232:
             red_i = (self.code - 16) // 36
             green_i = ((self.code - 16) % 36) // 6

@@ -5,7 +5,7 @@ from typing import Text
 import pytest
 from hypothesis import given
 
-from melanin import RGB, Hex, WebColor
+from melanin import RGB, Ansi256, Color, Hex, WebColor
 
 from .test_colorsys import between_0_and_1
 
@@ -121,3 +121,34 @@ def test_name_color(webcolor) -> None:
     assert webcolor.hex.web_color == webcolor
     assert webcolor.rgb.web_color == webcolor
     assert webcolor.hcl.web_color == webcolor
+
+
+@pytest.mark.parametrize(
+    "i,color",
+    [
+        (0, WebColor("black")),
+        (1, WebColor("maroon")),
+        (2, WebColor("green")),
+        (3, WebColor("yellow")),
+        (4, WebColor("blue")),
+        (5, WebColor("magenta")),
+        (6, WebColor("cyan")),
+        (7, WebColor("silver")),
+        (8, WebColor("grey")),
+        (9, WebColor("red")),
+        (10, WebColor("lightgreen")),
+        (11, WebColor("lightyellow")),
+        (12, WebColor("lightblue")),
+        (13, WebColor("fuchsia")),
+        (14, WebColor("lightcyan")),
+        (15, WebColor("white")),
+        (50, Hex("#00ffd7")),
+        (100, Hex("#878700")),
+        (150, Hex("#afd787")),
+        (200, Hex("#ff00d7")),
+        (250, Hex("#bcbcbc")),
+    ],
+)
+def test_ansi256(i: int, color: Color) -> None:
+    """Test correctness of ANSI 256 colors."""
+    assert Ansi256(i) == color
