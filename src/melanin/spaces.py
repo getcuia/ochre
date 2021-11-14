@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 from abc import ABC, abstractmethod
-from typing import Text
+from typing import Optional, Text
 
 from . import colorsys, web
 
@@ -47,16 +47,7 @@ class Color(ABC):
 
     def __eq__(self, other: Color) -> bool:
         """Return True if the colors are equal."""
-        rgb = self.rgb
-        other_rgb = other.rgb
-        return (
-            math.sqrt(
-                (rgb.red - other_rgb.red) ** 2
-                + (rgb.green - other_rgb.green) ** 2
-                + (rgb.blue - other_rgb.blue) ** 2
-            )
-            < 7e-3
-        )
+        return _dist_rgb(self, other) < 7e-3
 
 
 class Hex(Color):
@@ -156,7 +147,16 @@ class RGB(Color):
     @property
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
-        raise NotImplementedError()
+        minimal_name: Optional[Text] = None
+        minimal_distance = math.inf
+
+        for name, hexstr in web.colors.items():
+            distance = _dist_rgb(self, Hex(hexstr))
+            if distance < minimal_distance:
+                minimal_name = name
+                minimal_distance = distance
+        assert minimal_name is not None
+        return WebColor(minimal_name)
 
     @property
     def rgb(self) -> RGB:
@@ -209,3 +209,14 @@ class HCL(Color):
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
         return f"HCL({self.hue}, {self.chroma}, {self.luminance})"
+
+
+def _dist_rgb(color1: Color, color2: Color) -> float:
+    """Return the distance between two RGB colors."""
+    rgb1 = color1.rgb
+    rgb2 = color2.rgb
+    return math.sqrt(
+        (rgb1.red - rgb2.red) ** 2
+        + (rgb1.green - rgb2.green) ** 2
+        + (rgb1.blue - rgb2.blue) ** 2
+    )

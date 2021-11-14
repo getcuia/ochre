@@ -93,3 +93,31 @@ def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
 def test_html_basic_colors(webcolor, rgb) -> None:
     """Test the sixteen basic HTML color names."""
     assert webcolor.rgb == rgb
+
+
+@pytest.mark.parametrize(
+    "webcolor",
+    [
+        WebColor("white"),
+        WebColor("silver"),
+        WebColor("gray"),
+        WebColor("black"),
+        WebColor("red"),
+        WebColor("maroon"),
+        WebColor("yellow"),
+        WebColor("olive"),
+        WebColor("lime"),
+        WebColor("green"),
+        WebColor("aqua"),
+        WebColor("teal"),
+        WebColor("blue"),
+        WebColor("navy"),
+        WebColor("fuchsia"),
+        WebColor("purple"),
+    ],
+)
+def test_name_color(webcolor) -> None:
+    """Test the name color."""
+    assert webcolor.hex.web_color == webcolor
+    assert webcolor.rgb.web_color == webcolor
+    assert webcolor.hcl.web_color == webcolor
