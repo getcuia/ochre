@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from abc import ABC, abstractmethod
 from typing import Text
 
@@ -19,7 +20,7 @@ class Color(ABC):
 
     @property
     @abstractmethod
-    def name(self) -> WebColor:
+    def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
         raise NotImplementedError()
 
@@ -35,9 +36,27 @@ class Color(ABC):
         """Return the color as an HCL object."""
         raise NotImplementedError()
 
+    @abstractmethod
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        raise NotImplementedError()
+
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
         return self.hex.integer
+
+    def __eq__(self, other: Color) -> bool:
+        """Return True if the colors are equal."""
+        rgb = self.rgb
+        other_rgb = other.rgb
+        return (
+            math.sqrt(
+                (rgb.red - other_rgb.red) ** 2
+                + (rgb.green - other_rgb.green) ** 2
+                + (rgb.blue - other_rgb.blue) ** 2
+            )
+            < 6e-3
+        )
 
 
 class Hex(Color):
@@ -57,6 +76,11 @@ class Hex(Color):
         return self
 
     @property
+    def web_color(self) -> WebColor:
+        """Return the color as a WebColor object."""
+        return self.rgb.web_color
+
+    @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         r = (self.integer >> 16) & 0xFF
@@ -68,6 +92,10 @@ class Hex(Color):
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return self.rgb.hcl
+
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        return f"Hex({self.integer:X})"
 
 
 class WebColor(Color):
@@ -85,7 +113,7 @@ class WebColor(Color):
         return Hex(web.colors[self.name])
 
     @property
-    def name(self) -> WebColor:
+    def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
         return self
 
@@ -98,6 +126,10 @@ class WebColor(Color):
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return self.hex.hcl
+
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        return f"WebColor({self.name!r})"
 
 
 class RGB(Color):
@@ -122,6 +154,11 @@ class RGB(Color):
         return Hex((r << 16) + (g << 8) + b)
 
     @property
+    def web_color(self) -> WebColor:
+        """Return the color as a WebColor object."""
+        raise NotImplementedError()
+
+    @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         return self
@@ -130,6 +167,10 @@ class RGB(Color):
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return HCL(*colorsys.rgb_to_hcl(self.red, self.green, self.blue))
+
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        return f"RGB({self.red}, {self.green}, {self.blue})"
 
 
 class HCL(Color):
@@ -151,6 +192,11 @@ class HCL(Color):
         return self.rgb.hex
 
     @property
+    def web_color(self) -> WebColor:
+        """Return the color as a WebColor object."""
+        return self.rgb.web_color
+
+    @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         return RGB(*colorsys.hcl_to_rgb(self.hue, self.chroma, self.luminance))
@@ -159,3 +205,7 @@ class HCL(Color):
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return self
+
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        return f"HCL({self.hue}, {self.chroma}, {self.luminance})"
