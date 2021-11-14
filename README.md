@@ -1,3 +1,3 @@
 # melanin
 
-Colors that will make you smile 🦜
+A tiny Python package for working with colors focusing on human perception.

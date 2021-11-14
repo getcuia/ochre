@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "melanin"
 version = "0.1.0"
-description = "Colors that will make you smile 🦜"
+description = "A tiny Python package for working with colors focusing on human perception"
 authors = ["Felipe S. S. Schneider <schneider.felipe@posgrad.ufsc.br>"]
 license = "MIT"
 
