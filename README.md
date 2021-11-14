@@ -11,4 +11,4 @@ A tiny Python package for working with colors focusing on human perception.
         [standard `colorsys` module](https://docs.python.org/3/library/colorsys.html)
 -   [ ] Common color names
 -   [x] Zero dependencies
--   [ ] Python 3.5+
+-   [x] Python 3.6.2+
