@@ -7,4 +7,4 @@ __version__ = "0.1.0"
 __all__ = ["Ansi256", "Color", "HCL", "Hex", "RGB", "WebColor"]
 
 
-from .spaces import Ansi256, Color, HCL, Hex, RGB, WebColor
+from .spaces import HCL, RGB, Ansi256, Color, Hex, WebColor

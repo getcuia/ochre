@@ -13,22 +13,19 @@ class Color(ABC):
     """Abstract base class for color spaces."""
 
     @property
-    @abstractmethod
     def hex(self) -> Hex:
         """Return the color as an Hex object."""
-        raise NotImplementedError()
+        return self.rgb.hex
 
     @property
-    @abstractmethod
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
-        raise NotImplementedError()
+        return self.rgb.web_color
 
     @property
-    @abstractmethod
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
-        raise NotImplementedError()
+        return self.rgb.ansi256
 
     @property
     @abstractmethod
@@ -37,10 +34,9 @@ class Color(ABC):
         raise NotImplementedError()
 
     @property
-    @abstractmethod
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
-        raise NotImplementedError()
+        return self.rgb.hcl
 
     @abstractmethod
     def __repr__(self) -> Text:
@@ -73,27 +69,12 @@ class Hex(Color):
         return self
 
     @property
-    def web_color(self) -> WebColor:
-        """Return the color as a WebColor object."""
-        return self.rgb.web_color
-
-    @property
-    def ansi256(self) -> Ansi256:
-        """Return the color as an Ansi256 object."""
-        return self.rgb.ansi256
-
-    @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
         r = (self.integer >> 16) & 0xFF
         g = (self.integer >> 8) & 0xFF
         b = self.integer & 0xFF
         return RGB(r / 255, g / 255, b / 255)
-
-    @property
-    def hcl(self) -> HCL:
-        """Return the color as an HCL object."""
-        return self.rgb.hcl
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
@@ -118,11 +99,6 @@ class WebColor(Color):
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
         return self
-
-    @property
-    def ansi256(self) -> Ansi256:
-        """Return the color as an Ansi256 object."""
-        return self.rgb.ansi256
 
     @property
     def rgb(self) -> RGB:
@@ -168,16 +144,6 @@ class Ansi256(Color):
         self.code = code
 
     @property
-    def hex(self) -> Hex:
-        """Return the color as an Hex object."""
-        return self.rgb.hex
-
-    @property
-    def web_color(self) -> WebColor:
-        """Return the color as a WebColor object."""
-        return self.rgb.web_color
-
-    @property
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
         return self
@@ -201,11 +167,6 @@ class Ansi256(Color):
             value = (self.code - 232) * 10 + 8
             return RGB(value / 255, value / 255, value / 255)
         raise ValueError(f"Invalid ANSI code {self.code}")
-
-    @property
-    def hcl(self) -> HCL:
-        """Return the color as an HCL object."""
-        return self.rgb.hcl
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
@@ -270,21 +231,6 @@ class HCL(Color):
         self.hue = hue
         self.chroma = chroma
         self.luminance = luminance
-
-    @property
-    def hex(self) -> Hex:
-        """Return the color as an Hex object."""
-        return self.rgb.hex
-
-    @property
-    def web_color(self) -> WebColor:
-        """Return the color as a WebColor object."""
-        return self.rgb.web_color
-
-    @property
-    def ansi256(self) -> Ansi256:
-        """Return the color as an Ansi256 object."""
-        return self.rgb.ansi256
 
     @property
     def rgb(self) -> RGB:
