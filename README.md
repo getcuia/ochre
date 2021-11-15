@@ -1,3 +1,5 @@
+[![Python package](https://github.com/getcuia/ochre/actions/workflows/python-package.yml/badge.svg)](https://github.com/getcuia/ochre/actions/workflows/python-package.yml)
+
 # ochre 🏜️
 
 <img src="banner.jpg" alt="ochre" style="width:500px; height:500px; object-fit: fill; border-radius: 100%;" />
