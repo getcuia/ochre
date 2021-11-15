@@ -12,6 +12,8 @@ from . import colorsys, web
 class Color(ABC):
     """Abstract base class for color spaces."""
 
+    EQUALITY_THRESHOLD = 7e-3
+
     @abstractmethod
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
@@ -49,7 +51,7 @@ class Color(ABC):
 
     def __eq__(self, other) -> bool:
         """Return True if the colors are equal."""
-        return _dist_rgb(self.rgb, other.rgb) < 7e-3
+        return _dist_rgb(self.rgb, other.rgb) < self.EQUALITY_THRESHOLD
 
 
 class Hex(Color):
