@@ -1,4 +1,6 @@
+![PyPI](https://img.shields.io/pypi/v/ochre)
 [![Python package](https://github.com/getcuia/ochre/actions/workflows/python-package.yml/badge.svg)](https://github.com/getcuia/ochre/actions/workflows/python-package.yml)
+![PyPI - License](https://img.shields.io/pypi/l/ochre)
 
 # ochre 🏜️
 
