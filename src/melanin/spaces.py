@@ -69,7 +69,7 @@ class RGB(Color):
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
-        return f"RGB({self.red}, {self.green}, {self.blue})"
+        return f"RGB(red={self.red!r}, green={self.green!r}, blue={self.blue!r})"
 
     @property
     def rgb(self) -> RGB:
@@ -182,7 +182,7 @@ class Ansi256(Color):
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
-        return f"Ansi256({self.code})"
+        return f"Ansi256({self.code!r})"
 
     @property
     def rgb(self) -> RGB:
@@ -210,7 +210,7 @@ class HCL(Color):
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
-        return f"HCL({self.hue}, {self.chroma}, {self.luminance})"
+        return f"HCL(hue={self.hue!r}, chroma={self.chroma!r}, luminance={self.luminance!r})"
 
     @property
     def rgb(self) -> RGB:
