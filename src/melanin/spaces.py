@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import math
 from abc import ABC, abstractmethod
-from typing import Iterable, Optional, Text, TypeVar
+from typing import Iterable, Text
 
-from . import colorsys, dist, web
+from . import ansi256, colorsys, web
 
 
 class Color(ABC):
@@ -49,9 +49,23 @@ class Color(ABC):
         """Return the index of the color as an hexadecimal integer."""
         return self.hex.hex_code
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Color) -> bool:
         """Return True if the colors are equal."""
-        return dist(self, other) < self.EQUALITY_THRESHOLD
+        return self.distance(other) < self.EQUALITY_THRESHOLD
+
+    def distance(self, other: Color) -> float:
+        """Return the distance between colors in the HCL color space."""
+        self_hcl = self.hcl
+        other_hcl = other.hcl
+        return math.hypot(
+            self_hcl.hue - other_hcl.hue,
+            self_hcl.chroma - other_hcl.chroma,
+            self_hcl.luminance - other_hcl.luminance,
+        )
+
+    def closest(self, colors: Iterable[Color]) -> Color:
+        """Find the color in the given list that is closest to this color."""
+        return min(colors, key=lambda c: self.distance(c))
 
 
 class RGB(Color):
@@ -84,12 +98,12 @@ class RGB(Color):
     @property
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
-        return _closest_color_rgb(self, map(WebColor, web.colors.keys()))
+        return self.closest(map(WebColor, web.colors.keys()))
 
     @property
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
-        return _closest_color_rgb(self, map(Ansi256, range(256)))
+        return self.closest(map(Ansi256, range(len(ansi256.colors))))
 
     @property
     def hcl(self) -> HCL:
@@ -221,23 +235,3 @@ class HCL(Color):
     def hcl(self) -> HCL:
         """Return the color as an HCL object."""
         return self
-
-
-C = TypeVar("C", bound=Color)
-
-
-def _closest_color_rgb(color: RGB, colors: Iterable[C]) -> C:
-    """Return the closest color to the given color."""
-    minimal_color: Optional[C] = None
-    minimal_distance = math.inf
-
-    for other in colors:
-        distance = dist(color, other)
-        if distance < minimal_distance:
-            minimal_color = other
-            minimal_distance = distance
-
-    assert minimal_color is not None
-    return minimal_color
-
-    # return min(colors, key=lambda c: dist(color, c))
