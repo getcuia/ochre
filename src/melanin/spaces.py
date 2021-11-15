@@ -167,7 +167,7 @@ class WebColor(Color):
     @property
     def hex(self) -> Hex:
         """Return the color as an Hex object."""
-        return Hex(web.colors[self.name])
+        return Hex(colorsys.web_color_to_hex(self.name))
 
     @property
     def web_color(self) -> WebColor:

@@ -39,7 +39,7 @@ from colorsys import (
 )
 from typing import Text
 
-from . import ansi256
+from . import ansi256, web
 
 __all__ = [
     # Implemented in this module
@@ -173,17 +173,38 @@ def rgb_to_hex(r: float, g: float, b: float) -> int:
 
 def hex_to_rgb(hex_code: int | Text) -> tuple[float, float, float]:
     """Convert the color from hexadecimal to RGB coordinates."""
-    if isinstance(hex_code, Text):
-        hex_code = int(hex_code.lstrip("#"), 16)
+    hex_code = _hex_to_hex(hex_code)
     r = hex_code >> 16
     g = (hex_code >> 8) & 0xFF
     b = hex_code & 0xFF
     return r / 255, g / 255, b / 255
 
 
+def web_color_to_hex(name: Text) -> int:
+    """Convert the color from web color name to hexadecimal."""
+    return _hex_to_hex(web.colors[name])
+
+
+def web_color_to_rgb(name: Text) -> tuple[float, float, float]:
+    """Convert the color from web color name to RGB coordinates."""
+    return hex_to_rgb(web_color_to_hex(name))
+
+
+def ansi256_to_hex(code: int) -> int:
+    """Convert the color from ANSI 256 color code to hexadecimal."""
+    return _hex_to_hex(ansi256.colors[code])
+
+
 def ansi256_to_rgb(code: int) -> tuple[float, float, float]:
-    """Convert the color from ANSI 256 color to RGB coordinates."""
-    return hex_to_rgb(ansi256.colors[code])
+    """Convert the color from ANSI 256 color code to RGB coordinates."""
+    return hex_to_rgb(ansi256_to_hex(code))
+
+
+def _hex_to_hex(hex_code: int | Text) -> int:
+    """Ensure that the hexadecimal code is an integer."""
+    if isinstance(hex_code, Text):
+        return int(hex_code.lstrip("#"), 16)
+    return hex_code
 
 
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
