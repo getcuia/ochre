@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import math
 from abc import ABC, abstractmethod
-from typing import Iterable, Text
+from typing import Iterable, Text, TypeVar
 
 from . import ansi256, colorsys, web
+
+C = TypeVar("C", bound="Color")
 
 
 class Color(ABC):
@@ -74,7 +76,7 @@ class Color(ABC):
             self_hcl.luminance - other_hcl.luminance,
         )
 
-    def closest(self, colors: Iterable[Color]) -> Color:
+    def closest(self, colors: Iterable[C]) -> C:
         """Find the color in the given list that is closest to this color."""
         return min(colors, key=self.distance)
 
@@ -109,12 +111,12 @@ class RGB(Color):
     @property
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
-        return self.closest(map(WebColor, web.colors.keys())).web_color
+        return self.closest(map(WebColor, web.colors.keys()))
 
     @property
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
-        return self.closest(map(Ansi256, range(len(ansi256.colors)))).ansi256
+        return self.closest(map(Ansi256, range(len(ansi256.colors))))
 
     @property
     def hcl(self) -> HCL:
