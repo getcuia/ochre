@@ -1,6 +1,11 @@
 # ochre
 
-A tiny Python package for working with colors focusing on human perception.
+# ochre 🗿
+
+> A down-to-earth approach to colors
+
+ochre is a tiny Python package for working with colors in a pragmatic way. The
+focus is on simplicity and ease of use, but also on human perception.
 
 ## Features
 
