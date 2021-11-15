@@ -15,7 +15,7 @@ focus is on simplicity and ease of use, but also on human perception.
 -   ♻️ Color conversions that easily integrate with the
     [standard `colorsys` module](https://docs.python.org/3/library/colorsys.html)
 -   🗑️ Zero dependencies
--   🐍 Python 3.6.2+
+-   🐍 Python 3.8+
 
 ## Credits
 
