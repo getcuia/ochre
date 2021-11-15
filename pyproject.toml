@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "melanin"
+name = "ochre"
 version = "0.1.0"
 description = "A tiny Python package for working with colors focusing on human perception"
 authors = ["Felipe S. S. Schneider <schneider.felipe@posgrad.ufsc.br>"]

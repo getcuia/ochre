@@ -8,7 +8,7 @@ its contents for convenience.
 
 Examples
 --------
->>> from melanin import colorsys
+>>> from ochre import colorsys
 
 This module provides some conversions, among which is RGB from and to HCL:
 

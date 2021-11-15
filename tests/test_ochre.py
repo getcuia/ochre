@@ -1,6 +1,6 @@
 """Generic tests."""
 
-from melanin import __version__
+from ochre import __version__
 
 
 def test_version():

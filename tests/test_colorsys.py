@@ -1,10 +1,10 @@
-"""Tests for the extras in `melanin.colorsys`."""
+"""Tests for the extras in `ochre.colorsys`."""
 
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
 
-from melanin import colorsys
+from ochre import colorsys
 
 between_0_and_1 = st.floats(min_value=0, max_value=1)
 

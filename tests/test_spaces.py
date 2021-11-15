@@ -5,7 +5,7 @@ from typing import Text
 import pytest
 from hypothesis import given
 
-from melanin import RGB, Ansi256, Color, Hex, WebColor
+from ochre import RGB, Ansi256, Color, Hex, WebColor
 
 from .test_colorsys import between_0_and_1
 
