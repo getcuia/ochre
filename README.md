@@ -1,6 +1,6 @@
-<img src="banner.jpg" alt="ochre" style="width:640px; height:640px; object-fit: fill; border-radius: 100%;" />
-
 # ochre 🏜️
+
+<img src="banner.jpg" alt="ochre" style="width:500px; height:500px; object-fit: fill; border-radius: 100%;" />
 
 > A down-to-earth approach to colors
 
