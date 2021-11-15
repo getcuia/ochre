@@ -210,7 +210,12 @@ class Ansi256(Color):
     @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
-        return RGB(*colorsys.ansi256_to_rgb(self.code))
+        return self.hex.rgb
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        return Hex(colorsys.ansi256_to_hex(self.code))
 
     @property
     def ansi256(self) -> Ansi256:
