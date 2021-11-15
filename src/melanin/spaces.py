@@ -74,7 +74,7 @@ class Color(ABC):
 
     def closest(self, colors: Iterable[Color]) -> Color:
         """Find the color in the given list that is closest to this color."""
-        return min(colors, key=lambda c: self.distance(c))
+        return min(colors, key=self.distance)
 
 
 class RGB(Color):

@@ -171,12 +171,12 @@ def rgb_to_hex(r: float, g: float, b: float) -> int:
     return int(r * 255) << 16 | int(g * 255) << 8 | int(b * 255)
 
 
-def hex_to_rgb(hex_code: int | Text) -> tuple[float, float, float]:
+def hex_to_rgb(hc: int | Text) -> tuple[float, float, float]:
     """Convert the color from hexadecimal to RGB coordinates."""
-    hex_code = _hex_to_hex(hex_code)
-    r = hex_code >> 16
-    g = (hex_code >> 8) & 0xFF
-    b = hex_code & 0xFF
+    hc = _hex_to_hex(hc)
+    r = hc >> 16
+    g = (hc >> 8) & 0xFF
+    b = hc & 0xFF
     return r / 255, g / 255, b / 255
 
 
@@ -190,21 +190,21 @@ def web_color_to_rgb(name: Text) -> tuple[float, float, float]:
     return hex_to_rgb(web_color_to_hex(name))
 
 
-def ansi256_to_hex(code: int) -> int:
+def ansi256_to_hex(c: int) -> int:
     """Convert the color from ANSI 256 color code to hexadecimal."""
-    return _hex_to_hex(ansi256.colors[code])
+    return _hex_to_hex(ansi256.colors[c])
 
 
-def ansi256_to_rgb(code: int) -> tuple[float, float, float]:
+def ansi256_to_rgb(c: int) -> tuple[float, float, float]:
     """Convert the color from ANSI 256 color code to RGB coordinates."""
-    return hex_to_rgb(ansi256_to_hex(code))
+    return hex_to_rgb(ansi256_to_hex(c))
 
 
-def _hex_to_hex(hex_code: int | Text) -> int:
+def _hex_to_hex(hc: int | Text) -> int:
     """Ensure that the hexadecimal code is an integer."""
-    if isinstance(hex_code, Text):
-        return int(hex_code.lstrip("#"), 16)
-    return hex_code
+    if isinstance(hc, Text):
+        return int(hc.lstrip("#"), 16)
+    return hc
 
 
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
