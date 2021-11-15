@@ -151,11 +151,6 @@ class WebColor(Color):
         """Return the color as a WebColor object."""
         return self
 
-    @property
-    def hcl(self) -> HCL:
-        """Return the color as an HCL object."""
-        return self.hex.hcl
-
 
 class Ansi256(Color):
     """A color represented by an integer between 0 and 255."""
