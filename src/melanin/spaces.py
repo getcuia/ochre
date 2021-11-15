@@ -6,7 +6,7 @@ import math
 from abc import ABC, abstractmethod
 from typing import Iterable, Optional, Text, TypeVar
 
-from . import colorsys, web
+from . import colorsys, dist, web
 
 
 class Color(ABC):
@@ -51,7 +51,7 @@ class Color(ABC):
 
     def __eq__(self, other) -> bool:
         """Return True if the colors are equal."""
-        return _dist_rgb(self.rgb, other.rgb) < self.EQUALITY_THRESHOLD
+        return dist(self, other) < self.EQUALITY_THRESHOLD
 
 
 class RGB(Color):
@@ -223,15 +223,6 @@ class HCL(Color):
         return self
 
 
-def _dist_rgb(color1: RGB, color2: RGB) -> float:
-    """Return the distance between two RGB colors."""
-    return math.sqrt(
-        (color1.red - color2.red) ** 2
-        + (color1.green - color2.green) ** 2
-        + (color1.blue - color2.blue) ** 2
-    )
-
-
 C = TypeVar("C", bound=Color)
 
 
@@ -241,7 +232,7 @@ def _closest_color_rgb(color: RGB, colors: Iterable[C]) -> C:
     minimal_distance = math.inf
 
     for other in colors:
-        distance = _dist_rgb(color, other.rgb)
+        distance = dist(color, other)
         if distance < minimal_distance:
             minimal_color = other
             minimal_distance = distance
@@ -249,4 +240,4 @@ def _closest_color_rgb(color: RGB, colors: Iterable[C]) -> C:
     assert minimal_color is not None
     return minimal_color
 
-    # return min(colors, key=lambda c: _dist_rgb(color, c))
+    # return min(colors, key=lambda c: dist(color, c))
