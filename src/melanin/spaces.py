@@ -49,7 +49,7 @@ class Color(ABC):
 
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
-        return colorsys._hex_to_hex(self.hex.hex_code)
+        return colorsys.hex_to_hex(self.hex.hex_code)
 
     def __eq__(self, other: object) -> bool:
         """Return True if the colors are almost equal in RGB space."""
