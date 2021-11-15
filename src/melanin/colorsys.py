@@ -39,6 +39,8 @@ from colorsys import (
 )
 from typing import Text
 
+from . import ansi256
+
 __all__ = [
     # Implemented in this module
     "hcl_to_rgb",
@@ -177,6 +179,11 @@ def hex_to_rgb(hex_code: int | Text) -> tuple[float, float, float]:
     g = (hex_code >> 8) & 0xFF
     b = hex_code & 0xFF
     return r / 255, g / 255, b / 255
+
+
+def ansi256_to_rgb(code: int) -> tuple[float, float, float]:
+    """Convert the color from ANSI 256 color to RGB coordinates."""
+    return hex_to_rgb(ansi256.colors[code])
 
 
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:

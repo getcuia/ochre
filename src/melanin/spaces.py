@@ -187,22 +187,7 @@ class Ansi256(Color):
     @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
-        if self.code < 16:
-            return self.ANSI8[self.code].rgb
-        if self.code < 232:
-            red_i = (self.code - 16) // 36
-            green_i = ((self.code - 16) % 36) // 6
-            blue_i = (self.code - 16) % 6
-
-            red = 55 + red_i * 40 if red_i > 0 else 0
-            green = 55 + green_i * 40 if green_i > 0 else 0
-            blue = 55 + blue_i * 40 if blue_i > 0 else 0
-
-            return RGB(red / 255, green / 255, blue / 255)
-        if self.code < 256:
-            value = (self.code - 232) * 10 + 8
-            return RGB(value / 255, value / 255, value / 255)
-        raise ValueError(f"Invalid ANSI code {self.code}")
+        return RGB(*colorsys.ansi256_to_rgb(self.code))
 
     @property
     def ansi256(self) -> Ansi256:
