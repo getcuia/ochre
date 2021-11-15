@@ -54,6 +54,52 @@ class Color(ABC):
         return _dist_rgb(self.rgb, other.rgb) < self.EQUALITY_THRESHOLD
 
 
+class RGB(Color):
+    """An RGB color."""
+
+    red: float
+    green: float
+    blue: float
+
+    def __init__(self, red: float, green: float, blue: float) -> None:
+        """Initialize an RGB color."""
+        self.red = red
+        self.green = green
+        self.blue = blue
+
+    def __repr__(self) -> Text:
+        """Return a string representation of the color."""
+        return f"RGB({self.red}, {self.green}, {self.blue})"
+
+    @property
+    def rgb(self) -> RGB:
+        """Return the color as an RGB object."""
+        return self
+
+    @property
+    def hex(self) -> Hex:
+        """Return the color as an Hex object."""
+        r = int(self.red * 255)
+        g = int(self.green * 255)
+        b = int(self.blue * 255)
+        return Hex((r << 16) + (g << 8) + b)
+
+    @property
+    def web_color(self) -> WebColor:
+        """Return the color as a WebColor object."""
+        return _closest_color_rgb(self, map(WebColor, web.colors.keys()))
+
+    @property
+    def ansi256(self) -> Ansi256:
+        """Return the color as an Ansi256 object."""
+        return _closest_color_rgb(self, map(Ansi256, range(256)))
+
+    @property
+    def hcl(self) -> HCL:
+        """Return the color as an HCL object."""
+        return HCL(*colorsys.rgb_to_hcl(self.red, self.green, self.blue))
+
+
 class Hex(Color):
     """A color represented by a hexadecimal integer."""
 
@@ -173,52 +219,6 @@ class Ansi256(Color):
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
         return self
-
-
-class RGB(Color):
-    """An RGB color."""
-
-    red: float
-    green: float
-    blue: float
-
-    def __init__(self, red: float, green: float, blue: float) -> None:
-        """Initialize an RGB color."""
-        self.red = red
-        self.green = green
-        self.blue = blue
-
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        return f"RGB({self.red}, {self.green}, {self.blue})"
-
-    @property
-    def rgb(self) -> RGB:
-        """Return the color as an RGB object."""
-        return self
-
-    @property
-    def hex(self) -> Hex:
-        """Return the color as an Hex object."""
-        r = int(self.red * 255)
-        g = int(self.green * 255)
-        b = int(self.blue * 255)
-        return Hex((r << 16) + (g << 8) + b)
-
-    @property
-    def web_color(self) -> WebColor:
-        """Return the color as a WebColor object."""
-        return _closest_color_rgb(self, map(WebColor, web.colors.keys()))
-
-    @property
-    def ansi256(self) -> Ansi256:
-        """Return the color as an Ansi256 object."""
-        return _closest_color_rgb(self, map(Ansi256, range(256)))
-
-    @property
-    def hcl(self) -> HCL:
-        """Return the color as an HCL object."""
-        return HCL(*colorsys.rgb_to_hcl(self.red, self.green, self.blue))
 
 
 class HCL(Color):
