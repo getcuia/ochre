@@ -47,7 +47,7 @@ class Color(ABC):
 
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
-        return self.hex.integer
+        return self.hex.hex_code
 
     def __eq__(self, other) -> bool:
         """Return True if the colors are equal."""
@@ -100,22 +100,22 @@ class RGB(Color):
 class Hex(Color):
     """A color represented by a hexadecimal integer."""
 
-    integer: int
+    hex_code: int | Text
 
-    def __init__(self, value: int | Text) -> None:
+    def __init__(self, hex_code: int | Text) -> None:
         """Initialize a hexadecimal color."""
-        if isinstance(value, Text):
-            value = int(value.lstrip("#"), 16)
-        self.integer = value
+        self.hex_code = hex_code
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
-        return f"Hex({self.integer:X})"
+        if isinstance(self.hex_code, int):
+            return f"Hex({self.hex_code:X})"
+        return f"Hex({self.hex_code!r})"
 
     @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
-        return RGB(*colorsys.hex_to_rgb(self.integer))
+        return RGB(*colorsys.hex_to_rgb(self.hex_code))
 
     @property
     def hex(self) -> Hex:

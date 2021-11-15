@@ -37,6 +37,7 @@ from colorsys import (
     rgb_to_yiq,
     yiq_to_rgb,
 )
+from typing import Text
 
 __all__ = [
     # Implemented in this module
@@ -168,8 +169,10 @@ def rgb_to_hex(r: float, g: float, b: float) -> int:
     return int(r * 255) << 16 | int(g * 255) << 8 | int(b * 255)
 
 
-def hex_to_rgb(hex_code: int) -> tuple[float, float, float]:
+def hex_to_rgb(hex_code: int | Text) -> tuple[float, float, float]:
     """Convert the color from hexadecimal to RGB coordinates."""
+    if isinstance(hex_code, Text):
+        hex_code = int(hex_code.lstrip("#"), 16)
     r = hex_code >> 16
     g = (hex_code >> 8) & 0xFF
     b = hex_code & 0xFF
