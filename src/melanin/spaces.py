@@ -219,7 +219,11 @@ class HCL(Color):
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
-        return f"HCL(hue={self.hue!r}, chroma={self.chroma!r}, luminance={self.luminance!r})"
+        return (
+            f"HCL(hue={self.hue!r}, "
+            "chroma={self.chroma!r}, "
+            "luminance={self.luminance!r})"
+        )
 
     @property
     def rgb(self) -> RGB:
