@@ -7,6 +7,23 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/getcuia/ochre"
 repository = "https://github.com/getcuia/ochre"
+keywords = [
+    "ansi",
+    "color-palettes",
+    "colors",
+    "hcl",
+    "hex",
+    "rgb",
+    "web",
+    "zero-dependency",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Graphics",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
