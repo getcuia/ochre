@@ -50,8 +50,17 @@ class Color(ABC):
         return self.hex.hex_code
 
     def __eq__(self, other: Color) -> bool:
-        """Return True if the colors are equal."""
-        return self.distance(other) < self.EQUALITY_THRESHOLD
+        """Return True if the colors are almost equal in RGB space."""
+        self_rgb = self.rgb
+        other_rgb = other.rgb
+        return (
+            math.hypot(
+                self_rgb.red - other_rgb.red,
+                self_rgb.green - other_rgb.green,
+                self_rgb.blue - other_rgb.blue,
+            )
+            < self.EQUALITY_THRESHOLD
+        )
 
     def distance(self, other: Color) -> float:
         """Return the distance between colors in the HCL color space."""
