@@ -1,6 +1,6 @@
-# ochre
+<img src="banner.jpg" alt="ochre" style="width:640px; height:640px; object-fit: fill; border-radius: 100%;" />
 
-# ochre 🗿
+# ochre 🏜️
 
 > A down-to-earth approach to colors
 
@@ -16,3 +16,10 @@ focus is on simplicity and ease of use, but also on human perception.
     [standard `colorsys` module](https://docs.python.org/3/library/colorsys.html)
 -   🗑️ Zero dependencies
 -   🐍 Python 3.6.2+
+
+## Credits
+
+[Photo](banner.jpg) by
+[Nicola Carter](https://unsplash.com/@ncarterwilts?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+on
+[Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
