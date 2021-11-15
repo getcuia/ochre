@@ -47,10 +47,12 @@ class Color(ABC):
 
     def __index__(self) -> int:
         """Return the index of the color as an hexadecimal integer."""
-        return self.hex.hex_code
+        return colorsys._hex_to_hex(self.hex.hex_code)
 
-    def __eq__(self, other: Color) -> bool:
+    def __eq__(self, other: object) -> bool:
         """Return True if the colors are almost equal in RGB space."""
+        if not isinstance(other, Color):
+            raise TypeError(f"{other!r} is not a Color")
         self_rgb = self.rgb
         other_rgb = other.rgb
         return (
@@ -107,12 +109,12 @@ class RGB(Color):
     @property
     def web_color(self) -> WebColor:
         """Return the color as a WebColor object."""
-        return self.closest(map(WebColor, web.colors.keys()))
+        return self.closest(map(WebColor, web.colors.keys())).web_color
 
     @property
     def ansi256(self) -> Ansi256:
         """Return the color as an Ansi256 object."""
-        return self.closest(map(Ansi256, range(len(ansi256.colors))))
+        return self.closest(map(Ansi256, range(len(ansi256.colors)))).ansi256
 
     @property
     def hcl(self) -> HCL:
