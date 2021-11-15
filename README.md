@@ -21,6 +21,38 @@ focus is on simplicity and ease of use, but also on human perception.
 -   🗑️ Zero dependencies
 -   🐍 Python 3.8+
 
+## Installation
+
+```console
+$ pip install ochre
+```
+
+## Usage
+
+```python
+In [1]: from ochre import Hex
+
+In [2]: color = Hex("#CC7722")
+
+In [3]: color.web_color
+Out[3]: WebColor('peru')
+
+In [4]: color = color.hcl
+
+In [5]: color.hue
+Out[5]: 0.6373041934059377
+
+In [6]: import math
+
+In [7]: color.hue += math.radians(30)
+
+In [8]: color.hue
+Out[8]: 1.1609029690042365
+
+In [9]: color.web_color
+Out[9]: WebColor('goldenrod')
+```
+
 ## Credits
 
 [Photo](https://github.com/getcuia/ochre/raw/main/banner.jpg) by
