@@ -79,10 +79,7 @@ class RGB(Color):
     @property
     def hex(self) -> Hex:
         """Return the color as an Hex object."""
-        r = int(self.red * 255)
-        g = int(self.green * 255)
-        b = int(self.blue * 255)
-        return Hex((r << 16) + (g << 8) + b)
+        return Hex(colorsys.rgb_to_hex(self.red, self.green, self.blue))
 
     @property
     def web_color(self) -> WebColor:
@@ -118,10 +115,7 @@ class Hex(Color):
     @property
     def rgb(self) -> RGB:
         """Return the color as an RGB object."""
-        r = (self.integer >> 16) & 0xFF
-        g = (self.integer >> 8) & 0xFF
-        b = self.integer & 0xFF
-        return RGB(r / 255, g / 255, b / 255)
+        return RGB(*colorsys.hex_to_rgb(self.integer))
 
     @property
     def hex(self) -> Hex:

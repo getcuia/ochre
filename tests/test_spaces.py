@@ -25,7 +25,7 @@ def test_rgb_to_hex_roundtrip(r: float, g: float, b: float) -> None:
 
 
 @pytest.mark.parametrize(
-    "rgb,hexstr",
+    "rgb,hex_string",
     [
         (RGB(0, 0, 0), "0x0"),
         (RGB(0, 0, 1), "0xff"),
@@ -34,13 +34,13 @@ def test_rgb_to_hex_roundtrip(r: float, g: float, b: float) -> None:
         (RGB(1, 1, 1), "0xffffff"),
     ],
 )
-def test_hex_representation(rgb: RGB, hexstr: Text) -> None:
+def test_hex_representation(rgb: RGB, hex_string: Text) -> None:
     """Test conversion to hexadecimal."""
-    assert hex(rgb) == hexstr
+    assert hex(rgb) == hex_string
 
 
 @pytest.mark.parametrize(
-    "hexstr,rgb",
+    "hex_string,rgb",
     [
         ("0x0", RGB(0, 0, 0)),
         ("0xff", RGB(0, 0, 1)),
@@ -64,9 +64,9 @@ def test_hex_representation(rgb: RGB, hexstr: Text) -> None:
         ("#ffffff", RGB(1, 1, 1)),
     ],
 )
-def test_hex_parsing(hexstr: Text, rgb: RGB) -> None:
+def test_hex_parsing(hex_string: Text, rgb: RGB) -> None:
     """Test conversion to hexadecimal."""
-    assert Hex(hexstr).rgb == rgb
+    assert Hex(hex_string).rgb == rgb
 
 
 @pytest.mark.parametrize(

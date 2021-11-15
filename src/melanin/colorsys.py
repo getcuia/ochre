@@ -163,6 +163,19 @@ def hcl_to_luv(h: float, c: float, ell: float) -> tuple[float, float, float]:
     return ell, u, v
 
 
+def rgb_to_hex(r: float, g: float, b: float) -> int:
+    """Convert the color from RGB coordinates to hexadecimal."""
+    return int(r * 255) << 16 | int(g * 255) << 8 | int(b * 255)
+
+
+def hex_to_rgb(hex_code: int) -> tuple[float, float, float]:
+    """Convert the color from hexadecimal to RGB coordinates."""
+    r = hex_code >> 16
+    g = (hex_code >> 8) & 0xFF
+    b = hex_code & 0xFF
+    return r / 255, g / 255, b / 255
+
+
 def _xyz_to_uv(x: float, y: float, z: float) -> tuple[float, float]:
     """Convert the color from CIEXYZ coordinates to uv chromaticity coordinates."""
     if x == y == 0:
