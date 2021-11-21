@@ -4,7 +4,9 @@
 
 # ochre 🏜️
 
-<img src="https://github.com/getcuia/ochre/raw/main/banner.jpg" alt="ochre" style="width:500px; height:500px; object-fit: fill; border-radius: 100%;" />
+<div align="center">
+    <img class="hero" src="https://github.com/getcuia/ochre/raw/main/banner.jpg" alt="ochre" width="33%" />
+</div>
 
 > A down-to-earth approach to colors
 
