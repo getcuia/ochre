@@ -2,7 +2,7 @@
 [![Python package](https://github.com/getcuia/ochre/actions/workflows/python-package.yml/badge.svg)](https://github.com/getcuia/ochre/actions/workflows/python-package.yml)
 [![PyPI - License](https://img.shields.io/pypi/l/ochre)](https://github.com/getcuia/ochre/blob/main/LICENSE)
 
-# ochre 🏜️
+# [ochre](https://github.com/getcuia/ochre#readme) 🏜️
 
 <div align="center">
     <img class="hero" src="https://github.com/getcuia/ochre/raw/main/banner.jpg" alt="ochre" width="33%" />
