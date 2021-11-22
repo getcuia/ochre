@@ -17,7 +17,7 @@ focus is on simplicity and ease of use, but also on human perception.
 
 -   🎨 Focus on [RGB](https://en.wikipedia.org/wiki/RGB_color_model) and
     [HCL](https://en.wikipedia.org/wiki/HCL_color_space) color spaces
--   🖥️ Web color names
+-   🖥️ [Web color names](https://en.wikipedia.org/wiki/Web_colors#Extended_colors)
 -   ♻️ Color conversions that easily integrate with the
     [standard `colorsys` module](https://docs.python.org/3/library/colorsys.html)
 -   🗑️ Zero dependencies
