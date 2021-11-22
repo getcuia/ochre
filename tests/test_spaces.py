@@ -152,3 +152,9 @@ def test_name_color(webcolor) -> None:
 def test_ansi256(i: int, color: Color) -> None:
     """Test correctness of ANSI 256 colors."""
     assert Ansi256(i) == color
+
+
+def test_fail_for_invalid_web_color() -> None:
+    """Test failure for invalid web colors."""
+    with pytest.raises(ValueError):
+        WebColor("foo")

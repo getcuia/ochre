@@ -157,6 +157,8 @@ class WebColor(Color):
 
     def __init__(self, name: Text) -> None:
         """Initialize a color by name."""
+        if name not in web.colors:
+            raise ValueError(f"{name!r} is not a valid color name")
         self.name = name
 
     def __repr__(self) -> Text:
