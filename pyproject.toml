@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ochre"
-version = "0.1.1"
+version = "0.3.0"
 description = "A tiny Python package for working with colors in a pragmatic way"
 authors = ["Felipe S. S. Schneider <schneider.felipe@posgrad.ufsc.br>"]
 license = "MIT"
