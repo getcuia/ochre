@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import re
 from abc import ABC, abstractmethod
 from typing import Iterable, Iterator, Text, TypeVar
 
@@ -162,11 +163,14 @@ class WebColor(Color):
 
     name: Text
 
+    NORM_PATTERN = re.compile(r"[\s\-_]+")
+
     def __init__(self, name: Text) -> None:
         """Initialize a color by name."""
-        if name not in web.colors:
-            raise ValueError(f"{name!r} is not a valid color name")
-        self.name = name
+        norm_name = self.NORM_PATTERN.sub("", name).lower()
+        if norm_name not in web.colors:
+            raise ValueError(f"{norm_name!r} ({name!r}) is not a valid color name")
+        self.name = norm_name
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
