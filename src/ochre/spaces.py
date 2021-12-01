@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import math
 from abc import ABC, abstractmethod
-from typing import Iterable, Text, TypeVar
+from typing import Iterable, Iterator, Text, TypeVar
 
 from . import ansi256, colorsys, web
 
 C = TypeVar("C", bound="Color")
 
 
-class Color(ABC):
+class Color(ABC, Iterable[float]):
     """Abstract base class for color spaces."""
 
     EQUALITY_THRESHOLD = 7e-3
@@ -65,6 +65,13 @@ class Color(ABC):
             )
             < self.EQUALITY_THRESHOLD
         )
+
+    def __iter__(self) -> Iterator[float]:
+        """Return an iterator over the color's RGB channels."""
+        self_rgb = self.rgb
+        yield self_rgb.red
+        yield self_rgb.green
+        yield self_rgb.blue
 
     def distance(self, other: Color) -> float:
         """Return the distance between colors in the HCL color space."""
