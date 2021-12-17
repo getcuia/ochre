@@ -26,6 +26,8 @@ For convenience, the module also re-exports the standard conversions from `color
 """
 
 
+from __future__ import annotations
+
 import math
 from colorsys import (
     hls_to_rgb,
@@ -35,7 +37,7 @@ from colorsys import (
     rgb_to_yiq,
     yiq_to_rgb,
 )
-from typing import Text, Union
+from typing import Text
 
 from . import ansi256, web
 
@@ -169,7 +171,7 @@ def rgb_to_hex(r: float, g: float, b: float) -> int:
     return int(r * 255) << 16 | int(g * 255) << 8 | int(b * 255)
 
 
-def hex_to_rgb(hc: Union[int, Text]) -> tuple[float, float, float]:
+def hex_to_rgb(hc: int | Text) -> tuple[float, float, float]:
     """Convert the color from hexadecimal to RGB coordinates."""
     hc = hex_to_hex(hc)
     r = hc >> 16
@@ -198,7 +200,7 @@ def ansi256_to_rgb(c: int) -> tuple[float, float, float]:
     return hex_to_rgb(ansi256_to_hex(c))
 
 
-def hex_to_hex(hc: Union[int, Text]) -> int:
+def hex_to_hex(hc: int | Text) -> int:
     """Ensure that the hexadecimal code is an integer."""
     if isinstance(hc, Text):
         return int(hc.lstrip("#"), 16)
