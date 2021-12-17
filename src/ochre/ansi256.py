@@ -5,6 +5,8 @@ This is a
 [8-bit, 256-color lookup table](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit).
 """
 
+
+# Colors are orderer such that `colors[i]` is the i-th ANSI 8-bit color.
 colors = [
     "#000000",
     "#800000",
