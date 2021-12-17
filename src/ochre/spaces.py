@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 import re
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import Iterable, Iterator, Text, TypeVar
 
 from . import ansi256, colorsys, web
@@ -12,6 +13,7 @@ from . import ansi256, colorsys, web
 C = TypeVar("C", bound="Color")
 
 
+@dataclass(frozen=True)
 class Color(ABC, Iterable[float]):
     """Abstract base class for color spaces."""
 

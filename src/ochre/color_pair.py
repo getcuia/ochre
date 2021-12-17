@@ -9,7 +9,7 @@ from typing import Optional
 from .spaces import Color
 
 
-@dataclass
+@dataclass(frozen=True)
 class ColorPair:
     """A color pair of foreground and background colors."""
 
