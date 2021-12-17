@@ -1,5 +1,6 @@
 """Test suite for RGB and HCL color spaces."""
 
+from dataclasses import FrozenInstanceError
 from typing import Text
 
 import pytest
@@ -158,3 +159,18 @@ def test_fail_for_invalid_web_color() -> None:
     """Test failure for invalid web colors."""
     with pytest.raises(ValueError):
         WebColor("foo")
+
+
+@given(r=between_0_and_1, g=between_0_and_1, b=between_0_and_1)
+def test_colors_are_immutable(r: float, g: float, b: float) -> None:
+    """Test that colors are immutable."""
+    color = RGB(r, g, b)
+
+    with pytest.raises(FrozenInstanceError):
+        color.red = color.green
+
+    with pytest.raises(FrozenInstanceError):
+        color.green = color.blue
+
+    with pytest.raises(FrozenInstanceError):
+        color.blue = color.red

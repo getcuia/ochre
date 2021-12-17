@@ -13,16 +13,10 @@ from . import ansi256, colorsys, web
 C = TypeVar("C", bound="Color")
 
 
-@dataclass(frozen=True)
 class Color(ABC, Iterable[float]):
     """Abstract base class for color spaces."""
 
     EQUALITY_THRESHOLD = 7e-3
-
-    @abstractmethod
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        raise NotImplementedError()
 
     @property
     @abstractmethod
@@ -69,6 +63,10 @@ class Color(ABC, Iterable[float]):
             < self.EQUALITY_THRESHOLD
         )
 
+    def __hash__(self) -> int:
+        """Return the hash of the color."""
+        return hash(hex(self))
+
     def __iter__(self) -> Iterator[float]:
         """Return an iterator over the color's RGB channels."""
         self_rgb = self.rgb
@@ -91,22 +89,13 @@ class Color(ABC, Iterable[float]):
         return min(colors, key=self.distance)
 
 
+@dataclass(frozen=True, eq=False)
 class RGB(Color):
     """An RGB color."""
 
     red: float
     green: float
     blue: float
-
-    def __init__(self, red: float, green: float, blue: float) -> None:
-        """Initialize an RGB color."""
-        self.red = red
-        self.green = green
-        self.blue = blue
-
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        return f"RGB(red={self.red!r}, green={self.green!r}, blue={self.blue!r})"
 
     @property
     def rgb(self) -> RGB:
@@ -134,14 +123,11 @@ class RGB(Color):
         return HCL(*colorsys.rgb_to_hcl(self.red, self.green, self.blue))
 
 
+@dataclass(frozen=True, eq=False)
 class Hex(Color):
     """A color represented by a hexadecimal integer."""
 
     hex_code: int | Text
-
-    def __init__(self, hex_code: int | Text) -> None:
-        """Initialize a hexadecimal color."""
-        self.hex_code = hex_code
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
@@ -160,6 +146,7 @@ class Hex(Color):
         return self
 
 
+@dataclass(frozen=True, eq=False)
 class WebColor(Color):
     """A color represented by a name."""
 
@@ -167,16 +154,12 @@ class WebColor(Color):
 
     NORM_PATTERN = re.compile(r"[\s\-_]+")
 
-    def __init__(self, name: Text) -> None:
-        """Initialize a color by name."""
-        norm_name = self.NORM_PATTERN.sub("", name).lower()
+    def __post_init__(self) -> None:
+        """Normalize the name of the color."""
+        norm_name = self.NORM_PATTERN.sub("", self.name).lower()
         if norm_name not in web.colors:
-            raise ValueError(f"{norm_name!r} ({name!r}) is not a valid color name")
-        self.name = norm_name
-
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        return f"WebColor({self.name!r})"
+            raise ValueError(f"{norm_name!r} ({self.name!r}) is not a valid color name")
+        object.__setattr__(self, "name", norm_name)
 
     @property
     def rgb(self) -> RGB:
@@ -194,18 +177,11 @@ class WebColor(Color):
         return self
 
 
+@dataclass(frozen=True, eq=False)
 class Ansi256(Color):
     """A color represented by an integer between 0 and 255."""
 
     code: int
-
-    def __init__(self, code: int) -> None:
-        """Initialize an ANSI color."""
-        self.code = code
-
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        return f"Ansi256({self.code!r})"
 
     @property
     def rgb(self) -> RGB:
@@ -223,26 +199,13 @@ class Ansi256(Color):
         return self
 
 
+@dataclass(frozen=True, eq=False)
 class HCL(Color):
     """An HCL color."""
 
     hue: float
     chroma: float
     luminance: float
-
-    def __init__(self, hue: float, chroma: float, luminance: float) -> None:
-        """Initialize an HCL color."""
-        self.hue = hue
-        self.chroma = chroma
-        self.luminance = luminance
-
-    def __repr__(self) -> Text:
-        """Return a string representation of the color."""
-        return (
-            f"HCL(hue={self.hue!r}, "
-            "chroma={self.chroma!r}, "
-            "luminance={self.luminance!r})"
-        )
 
     @property
     def rgb(self) -> RGB:
