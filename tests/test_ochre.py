@@ -1,5 +1,7 @@
 """Generic tests."""
 
+import math
+
 from ochre import WebColor, __version__
 
 
@@ -14,4 +16,7 @@ def test_colors_are_iterable():
 
     assert all(isinstance(c, float) for c in color)
 
-    assert tuple(map(lambda c: int(255 * c), color)) == (100, 149, 237)
+    assert (
+        math.sqrt(sum(map(lambda c, cr: (255 * c - cr) ** 2, color, (100, 149, 237))))
+        < 1.25
+    )

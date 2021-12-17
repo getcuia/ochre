@@ -16,8 +16,6 @@ C = TypeVar("C", bound="Color")
 class Color(ABC, Iterable[float]):
     """Abstract base class for color spaces."""
 
-    EQUALITY_THRESHOLD = 7e-3
-
     @property
     @abstractmethod
     def rgb(self) -> RGB:
@@ -52,16 +50,7 @@ class Color(ABC, Iterable[float]):
         """Return True if the colors are almost equal in RGB space."""
         if not isinstance(other, Color):
             raise TypeError(f"{other!r} is not a Color")
-        self_rgb = self.rgb
-        other_rgb = other.rgb
-        return (
-            math.hypot(
-                self_rgb.red - other_rgb.red,
-                self_rgb.green - other_rgb.green,
-                self_rgb.blue - other_rgb.blue,
-            )
-            < self.EQUALITY_THRESHOLD
-        )
+        return hex(self) == hex(other)
 
     def __hash__(self) -> int:
         """Return the hash of the color."""
@@ -96,6 +85,12 @@ class RGB(Color):
     red: float
     green: float
     blue: float
+
+    def __post_init__(self) -> None:
+        """Round the RGB channels."""
+        object.__setattr__(self, "red", round(self.red, 2))
+        object.__setattr__(self, "green", round(self.green, 2))
+        object.__setattr__(self, "blue", round(self.blue, 2))
 
     @property
     def rgb(self) -> RGB:

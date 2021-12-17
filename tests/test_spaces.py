@@ -192,5 +192,4 @@ def test_color_equality_implies_equal_hashes(
     color2 = RGB(r2, g2, b2)
 
     if color1 == color2:
-        print("How did this happen?")
         assert hash(color1) == hash(color2)
