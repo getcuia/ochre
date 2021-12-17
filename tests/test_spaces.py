@@ -174,3 +174,23 @@ def test_colors_are_immutable(r: float, g: float, b: float) -> None:
 
     with pytest.raises(FrozenInstanceError):
         color.blue = color.red
+
+
+@given(
+    r1=between_0_and_1,
+    b1=between_0_and_1,
+    g1=between_0_and_1,
+    r2=between_0_and_1,
+    g2=between_0_and_1,
+    b2=between_0_and_1,
+)
+def test_color_equality_implies_equal_hashes(
+    r1: float, g1: float, b1: float, r2: float, g2: float, b2: float
+):
+    """Test that colors being equal implies equal hashes."""
+    color1 = RGB(r1, g1, b1)
+    color2 = RGB(r2, g2, b2)
+
+    if color1 == color2:
+        print("How did this happen?")
+        assert hash(color1) == hash(color2)
