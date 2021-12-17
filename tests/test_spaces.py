@@ -6,7 +6,7 @@ from typing import Text
 import pytest
 from hypothesis import given
 
-from ochre import RGB, Ansi256, Color, Hex, WebColor
+from ochre import RGB, Ansi256, Color, Hex, WebColor, web
 
 from .test_colorsys import between_0_and_1
 
@@ -176,20 +176,19 @@ def test_colors_are_immutable(r: float, g: float, b: float) -> None:
         color.blue = color.red
 
 
-@given(
-    r1=between_0_and_1,
-    b1=between_0_and_1,
-    g1=between_0_and_1,
-    r2=between_0_and_1,
-    g2=between_0_and_1,
-    b2=between_0_and_1,
-)
-def test_color_equality_implies_equal_hashes(
-    r1: float, g1: float, b1: float, r2: float, g2: float, b2: float
-):
+@pytest.mark.parametrize("color", map(WebColor, web.colors))
+def test_color_equality_implies_equal_hashes(color):
     """Test that colors being equal implies equal hashes."""
-    color1 = RGB(r1, g1, b1)
-    color2 = RGB(r2, g2, b2)
+    assert color == color
+    assert color.rgb == color.rgb
+    assert color.hex == color.hex
+    assert color.web_color == color.web_color
+    assert color.ansi256 == color.ansi256
+    assert color.hcl == color.hcl
 
-    if color1 == color2:
-        assert hash(color1) == hash(color2)
+    assert hash(color) == hash(color)
+    assert hash(color.rgb) == hash(color.rgb)
+    assert hash(color.hex) == hash(color.hex)
+    assert hash(color.web_color) == hash(color.web_color)
+    assert hash(color.ansi256) == hash(color.ansi256)
+    assert hash(color.hcl) == hash(color.hcl)

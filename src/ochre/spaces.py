@@ -86,11 +86,13 @@ class RGB(Color):
     green: float
     blue: float
 
+    N_DIGITS = 2
+
     def __post_init__(self) -> None:
         """Round the RGB channels."""
-        object.__setattr__(self, "red", round(self.red, 2))
-        object.__setattr__(self, "green", round(self.green, 2))
-        object.__setattr__(self, "blue", round(self.blue, 2))
+        object.__setattr__(self, "red", round(self.red, self.N_DIGITS))
+        object.__setattr__(self, "green", round(self.green, self.N_DIGITS))
+        object.__setattr__(self, "blue", round(self.blue, self.N_DIGITS))
 
     @property
     def rgb(self) -> RGB:
