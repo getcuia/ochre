@@ -1,7 +1,7 @@
 """Facilities for working with colors."""
 
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 __all__ = ["Ansi256", "Color", "ColorPair", "HCL", "Hex", "RGB", "WebColor"]
