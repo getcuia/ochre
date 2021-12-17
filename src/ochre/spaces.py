@@ -1,12 +1,11 @@
 """Objects representing colors in different color spaces."""
 
-from __future__ import annotations
 
 import math
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Iterable, Iterator, Text, TypeVar
+from typing import Iterable, Iterator, Text, TypeVar, Union
 
 from . import ansi256, colorsys, web
 
@@ -18,27 +17,27 @@ class Color(ABC, Iterable[float]):
 
     @property
     @abstractmethod
-    def rgb(self) -> RGB:
+    def rgb(self) -> "RGB":
         """Return the color as an RGB object."""
         raise NotImplementedError()
 
     @property
-    def hex(self) -> Hex:
+    def hex(self) -> "Hex":
         """Return the color as an Hex object."""
         return self.rgb.hex
 
     @property
-    def web_color(self) -> WebColor:
+    def web_color(self) -> "WebColor":
         """Return the color as a WebColor object."""
         return self.rgb.web_color
 
     @property
-    def ansi256(self) -> Ansi256:
+    def ansi256(self) -> "Ansi256":
         """Return the color as an Ansi256 object."""
         return self.rgb.ansi256
 
     @property
-    def hcl(self) -> HCL:
+    def hcl(self) -> "HCL":
         """Return the color as an HCL object."""
         return self.rgb.hcl
 
@@ -63,7 +62,7 @@ class Color(ABC, Iterable[float]):
         yield self_rgb.green
         yield self_rgb.blue
 
-    def distance(self, other: Color) -> float:
+    def distance(self, other: "Color") -> float:
         """Return the distance between colors in the HCL color space."""
         self_hcl = self.hcl
         other_hcl = other.hcl
@@ -95,27 +94,27 @@ class RGB(Color):
         object.__setattr__(self, "blue", round(self.blue, self.N_DIGITS))
 
     @property
-    def rgb(self) -> RGB:
+    def rgb(self) -> "RGB":
         """Return the color as an RGB object."""
         return self
 
     @property
-    def hex(self) -> Hex:
+    def hex(self) -> "Hex":
         """Return the color as an Hex object."""
         return Hex(colorsys.rgb_to_hex(self.red, self.green, self.blue))
 
     @property
-    def web_color(self) -> WebColor:
+    def web_color(self) -> "WebColor":
         """Return the color as a WebColor object."""
         return self.closest(map(WebColor, web.colors.keys()))
 
     @property
-    def ansi256(self) -> Ansi256:
+    def ansi256(self) -> "Ansi256":
         """Return the color as an Ansi256 object."""
         return self.closest(map(Ansi256, range(len(ansi256.colors))))
 
     @property
-    def hcl(self) -> HCL:
+    def hcl(self) -> "HCL":
         """Return the color as an HCL object."""
         return HCL(*colorsys.rgb_to_hcl(self.red, self.green, self.blue))
 
@@ -124,7 +123,7 @@ class RGB(Color):
 class Hex(Color):
     """A color represented by a hexadecimal integer."""
 
-    hex_code: int | Text
+    hex_code: Union[int, Text]
 
     def __repr__(self) -> Text:
         """Return a string representation of the color."""
@@ -138,7 +137,7 @@ class Hex(Color):
         return RGB(*colorsys.hex_to_rgb(self.hex_code))
 
     @property
-    def hex(self) -> Hex:
+    def hex(self) -> "Hex":
         """Return the color as an Hex object."""
         return self
 
@@ -169,7 +168,7 @@ class WebColor(Color):
         return Hex(colorsys.web_color_to_hex(self.name))
 
     @property
-    def web_color(self) -> WebColor:
+    def web_color(self) -> "WebColor":
         """Return the color as a WebColor object."""
         return self
 
@@ -191,7 +190,7 @@ class Ansi256(Color):
         return Hex(colorsys.ansi256_to_hex(self.code))
 
     @property
-    def ansi256(self) -> Ansi256:
+    def ansi256(self) -> "Ansi256":
         """Return the color as an Ansi256 object."""
         return self
 
@@ -210,6 +209,6 @@ class HCL(Color):
         return RGB(*colorsys.hcl_to_rgb(self.hue, self.chroma, self.luminance))
 
     @property
-    def hcl(self) -> HCL:
+    def hcl(self) -> "HCL":
         """Return the color as an HCL object."""
         return self

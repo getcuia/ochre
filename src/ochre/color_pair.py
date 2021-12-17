@@ -1,8 +1,6 @@
 """A color pair of foreground and background colors."""
 
 
-from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Optional
 
