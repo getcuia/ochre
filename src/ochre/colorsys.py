@@ -17,7 +17,7 @@ This module provides some conversions, among which is RGB from and to HCL:
 >>> colorsys.hcl_to_rgb(3.4, 0.2, 0.4)  # doctest: +NUMBER
 (0.2, 0.4, 0.4)
 
-For convenience, the module also re-exports the standard coversions from `colorsys`:
+For convenience, the module also re-exports the standard conversions from `colorsys`:
 
 >>> colorsys.rgb_to_hsv(0.2, 0.4, 0.4)
 (0.5, 0.5, 0.4)
