@@ -66,8 +66,13 @@ class Color(ABC, Iterable[float]):
         """Return the distance between colors in the HCL color space."""
         self_hcl = self.hcl
         other_hcl = other.hcl
+
+        # Hue wraps around at 360°, so we need to take the shortest distance.
+        hue_diff = abs(self_hcl.hue - other_hcl.hue)
+        hue_diff = min(hue_diff, 2 * math.pi - hue_diff)
+
         return math.hypot(
-            self_hcl.hue - other_hcl.hue,
+            hue_diff,
             self_hcl.chroma - other_hcl.chroma,
             self_hcl.luminance - other_hcl.luminance,
         )
@@ -76,20 +81,22 @@ class Color(ABC, Iterable[float]):
         """Find the color in the given list that is closest to this color."""
         return min(colors, key=self.distance)
 
-    def with_chroma(self, chroma: float) -> "Color":
+    def with_chroma(self, chroma: float) -> "HCL":
         """Return a copy of the color with the given chroma."""
+        self = self.hcl
         return HCL(self.hue, chroma, self.luminance)
 
-    def with_luminance(self, luminance: float) -> "Color":
+    def with_luminance(self, luminance: float) -> "HCL":
         """Return a copy of the color with the given luminance."""
+        self = self.hcl
         return HCL(self.hue, self.chroma, luminance)
 
-    def darken(self, amount: float = 1.0) -> "Color":
+    def darken(self, amount: float = 1.0) -> "HCL":
         """Return a color that is darker than this color."""
         self = self.hcl
         return self.with_luminance(self.luminance - amount * self.K_L)
 
-    def saturate(self, amount: float = 1.0) -> "Color":
+    def saturate(self, amount: float = 1.0) -> "HCL":
         """Return a color that is more saturated than this color."""
         self = self.hcl
         return self.with_chroma(self.chroma + amount * self.K_C)
