@@ -79,7 +79,11 @@ class Color(ABC, Iterable[float]):
 
 @dataclass(frozen=True, eq=False)
 class RGB(Color):
-    """An RGB color."""
+    """
+    An RGB color.
+
+    Values are in the range `[0, 1]` and they are clamped to that range.
+    """
 
     red: float
     green: float
@@ -88,10 +92,10 @@ class RGB(Color):
     N_DIGITS = 2
 
     def __post_init__(self) -> None:
-        """Round the RGB channels."""
-        object.__setattr__(self, "red", round(self.red, self.N_DIGITS))
-        object.__setattr__(self, "green", round(self.green, self.N_DIGITS))
-        object.__setattr__(self, "blue", round(self.blue, self.N_DIGITS))
+        """Clamp and round RGB channels."""
+        object.__setattr__(self, "red", round(clip(self.red, 0, 1), self.N_DIGITS))
+        object.__setattr__(self, "green", round(clip(self.green, 0, 1), self.N_DIGITS))
+        object.__setattr__(self, "blue", round(clip(self.blue, 0, 1), self.N_DIGITS))
 
     @property
     def rgb(self) -> "RGB":
@@ -212,3 +216,12 @@ class HCL(Color):
     def hcl(self) -> "HCL":
         """Return the color as an HCL object."""
         return self
+
+
+def clip(value: float, min_value: float, max_value: float) -> float:
+    """Clip a value to the given range."""
+    if value < min_value:
+        return min_value
+    if value > max_value:
+        return max_value
+    return value

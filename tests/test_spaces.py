@@ -6,7 +6,7 @@ from typing import Text
 import pytest
 from hypothesis import given
 
-from ochre import RGB, Ansi256, Color, Hex, WebColor, web
+from ochre import HCL, RGB, Ansi256, Color, Hex, WebColor, web
 
 from .test_colorsys import between_0_and_1
 
@@ -23,6 +23,25 @@ def test_rgb_to_hex_roundtrip(r: float, g: float, b: float) -> None:
     """Test roundtrip conversion from RGB to Hex and back."""
     rgb = RGB(r, g, b)
     assert rgb.hex.rgb == rgb
+
+
+@pytest.mark.parametrize(
+    "hcl,rgb",
+    [
+        # See issue #11.
+        (
+            HCL(
+                hue=1.1698979538899317,
+                chroma=0.8638193887593605,
+                luminance=0.5836299450432034,
+            ),
+            RGB(red=0.68, green=0.54, blue=0.0),
+        )
+    ],
+)
+def test_hcl_to_rgb_range(hcl: HCL, rgb: RGB) -> None:
+    """Test that converted HCL colors are within the RGB color space."""
+    assert hcl.rgb == rgb
 
 
 @pytest.mark.parametrize(
