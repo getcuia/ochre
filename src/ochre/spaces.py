@@ -76,6 +76,24 @@ class Color(ABC, Iterable[float]):
         """Find the color in the given list that is closest to this color."""
         return min(colors, key=self.distance)
 
+    def with_chroma(self, chroma: float) -> "Color":
+        """Return a copy of the color with the given chroma."""
+        return HCL(self.hue, chroma, self.luminance)
+
+    def with_luminance(self, luminance: float) -> "Color":
+        """Return a copy of the color with the given luminance."""
+        return HCL(self.hue, self.chroma, luminance)
+
+    def darken(self, amount: float = 1.0) -> "Color":
+        """Return a color that is darker than this color."""
+        self = self.hcl
+        return self.with_luminance(self.luminance - amount * self.K_L)
+
+    def saturate(self, amount: float = 1.0) -> "Color":
+        """Return a color that is more saturated than this color."""
+        self = self.hcl
+        return self.with_chroma(self.chroma + amount * self.K_C)
+
 
 @dataclass(frozen=True, eq=False)
 class RGB(Color):
@@ -206,6 +224,10 @@ class HCL(Color):
     hue: float
     chroma: float
     luminance: float
+
+    # Proportionality constants for variations in luminance and chroma.
+    K_L = 0.1801
+    K_C = 0.0981
 
     @property
     def rgb(self) -> RGB:
