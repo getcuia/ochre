@@ -32,7 +32,7 @@ python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
-mypy = "^0.941"
+mypy = "^0.942"
 bandit = "^1.7.4"
 flake8 = "^4.0.1"
 black = {version = "^22.1", allow-prereleases = true}
