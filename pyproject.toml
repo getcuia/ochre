@@ -37,7 +37,7 @@ bandit = "^1.7.4"
 flake8 = "^4.0.1"
 black = {version = "^22.1", allow-prereleases = true}
 pylint = "^2.13.0"
-hypothesis = "^6.39.4"
+hypothesis = "^6.39.6"
 pydocstyle = "^6.1.1"
 isort = "^5.10.1"
 ipython = "^8.1.1"
