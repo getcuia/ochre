@@ -103,7 +103,7 @@ def test_hex_parsing(hex_string: Text, rgb: RGB) -> None:
     ],
 )
 def test_relative_luminance(hex_string: Text, relative_luminance: float) -> None:
-    """Test luminance calculation."""
+    """Test relative luminance calculation."""
     assert Hex(hex_string).relative_luminance == relative_luminance
 
 
