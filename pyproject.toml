@@ -30,6 +30,9 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 
+[tool.poetry.group.dev.dependencies]
+prospector = "^1.7.7"
+
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
 mypy = "^0.960"
