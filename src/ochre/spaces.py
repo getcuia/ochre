@@ -101,6 +101,18 @@ class Color(ABC, Iterable[float]):
         self = self.hcl
         return self.with_chroma(self.chroma + amount * self.K_C)
 
+    @property
+    def relative_luminance(self) -> float:
+        """Return the relative luminance of the color as defined in WCAG 2.1."""
+
+        def f(v):
+            if v <= 0.03928:
+                return v / 12.92
+            return math.pow((v + 0.055) / 1.055, 2.4)
+
+        self = self.rgb
+        return 0.2126 * f(self.red) + 0.7152 * f(self.green) + 0.0722 * f(self.blue)
+
 
 @dataclass(frozen=True, eq=False)
 class RGB(Color):
