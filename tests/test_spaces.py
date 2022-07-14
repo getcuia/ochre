@@ -90,6 +90,24 @@ def test_hex_parsing(hex_string: Text, rgb: RGB) -> None:
 
 
 @pytest.mark.parametrize(
+    "hex_string,relative_luminance",
+    [
+        ("#000000", 0),
+        ("#ffffff", 1),
+        ("#ff0000", 0.2126),
+        ("#00ff00", 0.7152),
+        ("#0000ff", 0.0722),
+        ("#ffff00", 0.9278),
+        ("#00ffff", 0.7874),
+        ("#ff00ff", 0.2848),
+    ],
+)
+def test_relative_luminance(hex_string: Text, relative_luminance: float) -> None:
+    """Test relative luminance calculation."""
+    assert Hex(hex_string).relative_luminance == relative_luminance
+
+
+@pytest.mark.parametrize(
     "webcolor,rgb",
     [
         (WebColor("white"), RGB(1, 1, 1)),

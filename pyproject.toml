@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ochre"
-version = "0.4.0"
+version = "0.5.0"
 description = "A tiny Python package for working with colors in a pragmatic way"
 authors = ["Felipe S. S. Schneider <schneider.felipe@posgrad.ufsc.br>"]
 license = "MIT"
@@ -29,6 +29,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+prospector = "^1.7.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"

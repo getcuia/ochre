@@ -7,7 +7,7 @@ from ochre import WebColor, __version__
 
 def test_version():
     """Test version."""
-    assert __version__ == "0.4.0"
+    assert __version__ == "0.5.0"
 
 
 def test_colors_are_iterable():
