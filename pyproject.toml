@@ -38,7 +38,7 @@ pytest = "^7.1"
 mypy = "^0.960"
 bandit = "^1.7.4"
 flake8 = "^4.0.1"
-black = {version = "^22.3", allow-prereleases = true}
+black = {version = "^22.10", allow-prereleases = true}
 pylint = "^2.14.1"
 hypothesis = "^6.49.1"
 pydocstyle = "^6.1.1"
