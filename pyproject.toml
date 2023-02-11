@@ -43,7 +43,7 @@ pylint = "^2.14.1"
 hypothesis = "^6.49.1"
 pydocstyle = "^6.1.1"
 isort = "^5.10.1"
-ipython = "^8.4.0"
+ipython = "^8.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
